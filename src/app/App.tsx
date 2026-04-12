@@ -91,7 +91,7 @@ const getIconByName = (name: string) => {
     Apple, Carrot, Milk, Beef, Droplet, Fish, IceCream, Wine, Package, Beer,
     Coffee, Cookie, Sandwich, Pizza, Cake, Cherry, Grape, Banana, Salad, Egg,
     Croissant, CakeSlice, Soup, Citrus, Candy, Martini, CupSoda, Drumstick,
-    Wheat, Flame, FlaskConical, CircleDot, Heart, Star, Sparkles,
+    Wheat,
   };
   return iconMap[name] || Apple;
 };
