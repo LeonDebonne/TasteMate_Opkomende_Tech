@@ -48,12 +48,6 @@ import {
   CupSoda,
   Drumstick,
   Wheat,
-  Flame,
-  FlaskConical,
-  CircleDot,
-  Heart,
-  Star,
-  Sparkles,
 } from 'lucide-react';
 import { GripVertical } from 'lucide-react';
 
