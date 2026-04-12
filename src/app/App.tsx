@@ -48,6 +48,12 @@ import {
   CupSoda,
   Drumstick,
   Wheat,
+  Flame,
+  FlaskConical,
+  CircleDot,
+  Heart,
+  Star,
+  Sparkles,
 } from 'lucide-react';
 import { GripVertical } from 'lucide-react';
 
@@ -91,7 +97,7 @@ const getIconByName = (name: string) => {
     Apple, Carrot, Milk, Beef, Droplet, Fish, IceCream, Wine, Package, Beer,
     Coffee, Cookie, Sandwich, Pizza, Cake, Cherry, Grape, Banana, Salad, Egg,
     Croissant, CakeSlice, Soup, Citrus, Candy, Martini, CupSoda, Drumstick,
-    Wheat,
+    Wheat, Flame, FlaskConical, CircleDot, Heart, Star, Sparkles,
   };
   return iconMap[name] || Apple;
 };
