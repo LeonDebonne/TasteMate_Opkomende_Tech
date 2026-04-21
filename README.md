@@ -7,6 +7,6 @@ Er is gebruikgemaakt van enkele Arduino-componenten, zoals de Arduino Uno, een a
 
 Het resultaat is quick en dirty gerealiseerd om zo weinig tijd te verliezen aan het opfleuren van iets dat louter testen van een concept is.
 
-Hier onder is het Wokwi schema te vinden van het arduino project. De code is te vinden onder [Arduino_Code](./src/Arduino_Code).
+Hier onder is het Wokwi schema te vinden van het arduino project. De code is te vinden onder [Arduino_Code](src/Arduino_Code).
 
 <img src="/Images/Schema_Wakeup.jpg" width="100%">
