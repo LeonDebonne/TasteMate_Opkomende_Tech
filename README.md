@@ -9,4 +9,4 @@ Het resultaat is quick en dirty gerealiseerd om zo weinig tijd te verliezen aan 
 
 Hier onder is het Wokwi schema te vinden van het arduino project. De code is te vinden onder [Arduino_Code](src/Arduino_Code).
 
-<img src="/Images/Schema_Wakeup.jpg" width="100%">
+<img src="/img/Schema_Wakeup.jpg" width="100%">
