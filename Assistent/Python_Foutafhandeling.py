@@ -8,12 +8,11 @@ r = sr.Recognizer()
 # Text-to-speech engine opstarten
 tts = pyttsx3.init()
 
-# Loop door alle beschikbare stemmen op zoek naar een Engelse
-for voice in tts.getProperty("voices"):
-    if "english" in voice.name.lower() or "en_" in voice.id.lower():
-        # Engelse stem instellen en stoppen met zoeken
-        tts.setProperty("voice", voice.id)
-        break
+# Setup voor de stem in het Engels.
+tts.setProperty(
+    "voice",
+    "HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Speech\\Voices\\Tokens\\TTS_MS_EN-US_ZIRA_11.0",
+)
 
 # Microfoon openen
 with sr.Microphone() as mic:
