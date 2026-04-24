@@ -37,7 +37,7 @@ export function KeyboardModal({
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent 
-        className="max-w-full w-full p-0 m-0 fixed bottom-0 left-0 right-0 translate-x-0 translate-y-0 border-0 rounded-t-2xl shadow-2xl"
+        className="w-full md:max-w-md p-0 m-0 fixed bottom-0 left-1/2 -translate-x-1/2 border-0 rounded-t-2xl shadow-2xl"
         style={{
           top: 'auto',
           transform: 'none',
