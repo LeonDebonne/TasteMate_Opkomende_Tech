@@ -1,41 +1,45 @@
 import speech_recognition as sr, pyttsx3
 from google import genai
 
-# Verbinding maken met Gemini API
 client = genai.Client(api_key="AIzaSyBXM8GQFgTIlQDrlVzZoCFf991oQRoH4Q8")
-# Spraakherkenner aanmaken
 r = sr.Recognizer()
-# Text-to-speech engine opstarten
 tts = pyttsx3.init()
 
-# Setup voor de stem in het Engels.
 tts.setProperty(
     "voice",
-    "HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Speech\\Voices\\Tokens\\TTS_MS_EN-US_ZIRA_11.0",
+    "HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Speech\\Voices\\Tokens\\TTS_MS_NL-NL_HANNA_11.0",
 )
 
-# Microfoon openen
+# Info over de koelkast
+context = """
+Je bent een koelkastassistent. Je helpt de gebruiker met het bijhouden van voedsel in de koelkast.
+Je kent de locaties en houdbaarheidsdata van de volgende producten:
+
+- Melk: bovenste schap, houdbaar tot 28/04/2026
+- Kaas: middelste schap, houdbaar tot 10/05/2026
+- Boter: deurrek, houdbaar tot 15/06/2026
+- Yoghurt: onderste schap, houdbaar tot 30/04/2026
+- Appelsap: deurrek, houdbaar tot 01/08/2026
+
+Geef korte en duidelijke antwoorden.
+"""
+
 with sr.Microphone() as mic:
-    # Kalibreer op achtergrondgeluid gedurende 1 seconde
     r.adjust_for_ambient_noise(mic, duration=1)
     print("Speak...")
     try:
-        # Neem audio op en stuur naar Google voor herkenning
         spoken = r.recognize_google(r.listen(mic))
     except sr.UnknownValueError:
-        # Google kon de spraak niet begrijpen
         print("Kon je stem niet verstaan, probeer opnieuw.")
         exit()
     except sr.RequestError:
-        # Geen internetverbinding met Google
         print("Geen verbinding met Google Speech API.")
         exit()
 
-# Stuur de herkende tekst naar Gemini en ontvang een antwoord
-resp = client.models.generate_content(model="gemini-2.5-flash", contents=spoken)
-# Haal de tekst uit het antwoord en verwijder onnodige spaties
+resp = client.models.generate_content(
+    model="gemini-2.5-flash", contents=context + "\n\nVraag van gebruiker: " + spoken
+)
 reply = resp.text.strip()
 print("Assistant : ", reply)
-# Zet het antwoord klaar en spreek het uit
 tts.say(reply)
 tts.runAndWait()
