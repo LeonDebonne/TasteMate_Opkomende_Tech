@@ -1,16 +1,15 @@
-import speech_recognition as sr, pyttsx3
+import speech_recognition as sr
 from google import genai
+import edge_tts
+import asyncio
+import pygame
+import io
+from key import GEMINI_API_KEY
 
-client = genai.Client(api_key="AIzaSyAMcet7DEvbameB-9EgQncSlIEXs3AqOKg")
+client = genai.Client(api_key=GEMINI_API_KEY)
 r = sr.Recognizer()
-tts = pyttsx3.init()
+pygame.mixer.init()
 
-tts.setProperty(
-    "voice",
-    "HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Speech\\Voices\\Tokens\\TTS_MS_NL-NL_HANNA_11.0",
-)
-
-# Info over de koelkast
 context = """
 Je bent een koelkastassistent. Je helpt de gebruiker met het bijhouden van voedsel in de koelkast.
 Je kent de locaties en houdbaarheidsdata van de volgende producten:
@@ -24,11 +23,25 @@ Je kent de locaties en houdbaarheidsdata van de volgende producten:
 Geef korte en duidelijke antwoorden.
 """
 
+
+async def speak(text):
+    communicate = edge_tts.Communicate(text, voice="nl-NL-ColetteNeural")
+    audio_data = b""
+    async for chunk in communicate.stream():
+        if chunk["type"] == "audio":
+            audio_data += chunk["data"]
+    pygame.mixer.music.load(io.BytesIO(audio_data))
+    pygame.mixer.music.play()
+    while pygame.mixer.music.get_busy():
+        pygame.time.Clock().tick(10)
+
+
 with sr.Microphone() as mic:
     r.adjust_for_ambient_noise(mic, duration=1)
-    print("Speak...")
+    print("Spreek nu...")
     try:
-        spoken = r.recognize_google(r.listen(mic))
+        spoken = r.recognize_google(r.listen(mic), language="nl-NL")
+        print(f"Jij: {spoken}")
     except sr.UnknownValueError:
         print("Kon je stem niet verstaan, probeer opnieuw.")
         exit()
@@ -37,9 +50,8 @@ with sr.Microphone() as mic:
         exit()
 
 resp = client.models.generate_content(
-    model="gemini-2.5-flash", contents=context + "\n\nVraag van gebruiker: " + spoken
+    model="gemini-2.0-flash", contents=context + "\n\nVraag van gebruiker: " + spoken
 )
 reply = resp.text.strip()
-print("Assistant : ", reply)
-tts.say(reply)
-tts.runAndWait()
+print("Assistent:", reply)
+asyncio.run(speak(reply))
