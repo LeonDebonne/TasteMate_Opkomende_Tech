@@ -426,7 +426,7 @@ const [inventory, setInventory] = useState<Record<string, FoodItem[]>>(() => {
   ) => {
     handleAddItem(categoryId, name, expiryDate, quantity);
 
-    await fetch("http://localhost:5000/products", {
+    await fetch("http://localhost:5000/inventory", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
