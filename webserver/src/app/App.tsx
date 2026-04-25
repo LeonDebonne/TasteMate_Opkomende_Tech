@@ -466,7 +466,7 @@ const [inventory, setInventory] = useState<Record<string, FoodItem[]>>(() => {
     setShowNewCategoryModal(true);
   };
 
-  const handleDeleteCategory = useCallback((categoryId: string, zone: string, index: number) => {
+const handleDeleteCategory = useCallback((categoryId: string, zone: string, index: number) => {
   setFridgeZones((prevZones: any) => {
     const newZones = { ...prevZones };
 
@@ -493,19 +493,6 @@ const [inventory, setInventory] = useState<Record<string, FoodItem[]>>(() => {
     setSelectedCategory(null);
   }
 }, [selectedCategory]);
-
-    // Also remove from custom categories if it's custom
-    if (categoryId.startsWith('custom_')) {
-      setCustomCategories(prev => prev.filter(cat => cat.id !== categoryId));
-    }
-
-    // Remove inventory for this category
-    setInventory(prev => {
-      const newInventory = { ...prev };
-      delete newInventory[categoryId];
-      return newInventory;
-    });
-  }, []);
 
   const handleSelectColorTheme = (themeId: string) => {
     setColorTheme(themeId);
