@@ -20,7 +20,7 @@ Je kent de locaties en houdbaarheidsdata van de volgende producten:
 - Yoghurt: onderste schap, houdbaar tot 30/04/2026
 - Appelsap: deurrek, houdbaar tot 01/08/2026
 
-Geef korte en duidelijke antwoorden.
+Geef korte en duidelijke antwoorden. Begin je antwoord nooit met "Assistent:".
 """
 
 geschiedenis = []
@@ -44,8 +44,12 @@ async def main():
         print("Klaar! Stel je vraag.")
         while True:
             try:
-                spoken = r.recognize_google(r.listen(mic), language="nl-NL")
+                audio = r.listen(mic, timeout=60)
+                spoken = r.recognize_google(audio, language="nl-NL")
                 print(f"Jij: {spoken}")
+            except sr.WaitTimeoutError:
+                print("Geen spraak gedetecteerd, assistent sluit af.")
+                break
             except sr.UnknownValueError:
                 print("Niet verstaan, probeer opnieuw.")
                 continue
@@ -55,7 +59,6 @@ async def main():
 
             geschiedenis.append({"role": "user", "content": spoken})
 
-            # Onthoud maar de laatste 4 berichten (4 vragen + 4 antwoorden)
             if len(geschiedenis) > 4:
                 geschiedenis.pop(0)
 
@@ -70,7 +73,8 @@ async def main():
                 model="gemini-2.5-flash", contents=berichten
             )
             reply = resp.text.strip()
-            print("Assistent:", reply)
+            reply = reply.removeprefix("Assistent:").strip()
+            print(f"Assistent: {reply}")
 
             geschiedenis.append({"role": "assistant", "content": reply})
 
@@ -78,4 +82,7 @@ async def main():
             print("Stel je volgende vraag.")
 
 
-asyncio.run(main())
+try:
+    asyncio.run(main())
+except KeyboardInterrupt:
+    pass
