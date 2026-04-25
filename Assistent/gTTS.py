@@ -50,7 +50,7 @@ with sr.Microphone() as mic:
         exit()
 
 resp = client.models.generate_content(
-    model="gemini-2.0-flash", contents=context + "\n\nVraag van gebruiker: " + spoken
+    model="gemini-2.5-flash", contents=context + "\n\nVraag van gebruiker: " + spoken
 )
 reply = resp.text.strip()
 print("Assistent:", reply)
