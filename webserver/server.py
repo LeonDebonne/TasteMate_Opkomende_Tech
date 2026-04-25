@@ -50,6 +50,21 @@ def add_product():
 
     return jsonify(new_product)
 
+@app.route("/categories", methods=["POST"])
+def add_category():
+    data = load_inventory()
+    category = request.json
+
+    new_category = {
+        "id": category["id"],
+        "name": category["name"]
+    }
+
+    data["categories"].append(new_category)
+    save_inventory(data)
+
+    return jsonify(new_category)
+
 
 @app.route("/products/<product_id>", methods=["DELETE"])
 def delete_product(product_id):

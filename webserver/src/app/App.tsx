@@ -453,13 +453,23 @@ const [inventory, setInventory] = useState<Record<string, FoodItem[]>>(() => {
     });
   };
 
-  const handleCreateCategory = (name: string, iconName: string, color: string, zone: string) => {
+  const handleCreateCategory = async (name: string, iconName: string, color: string, zone: string) => {
     const newCategory: Category = {
       id: `custom_${Date.now()}`,
       name,
       icon: getIconByName(iconName),
       color,
     };
+    await fetch("http://localhost:5000/categories", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        id: newCategory.id,
+        name: newCategory.name,
+      }),
+    });
     
     setCustomCategories(prev => [...prev, newCategory]);
     
