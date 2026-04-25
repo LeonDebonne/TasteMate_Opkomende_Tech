@@ -1,7 +1,7 @@
 import speech_recognition as sr, pyttsx3
 from google import genai
 
-client = genai.Client(api_key="AIzaSyBXM8GQFgTIlQDrlVzZoCFf991oQRoH4Q8")
+client = genai.Client(api_key="AIzaSyADRg_s4c4VD2DXAsmEUVtdsJj3nbbVtD0")
 r = sr.Recognizer()
 tts = pyttsx3.init()
 
