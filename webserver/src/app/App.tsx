@@ -420,8 +420,26 @@ const [inventory, setInventory] = useState<Record<string, FoodItem[]>>(() => {
     });
   };
 
-  const handleAddProductFromModal = (name: string, expiryDate: string, categoryId: string, quantity: number) => {
+  const handleAddProductFromModal = async (
+    name: string,
+    expiryDate: string,
+    categoryId: string,
+    quantity: number
+  ) => {
     handleAddItem(categoryId, name, expiryDate, quantity);
+
+    await fetch("http://localhost:5000/products", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        name,
+        quantity,
+        categoryId,
+        expiryDate,
+      }),
+    });
   };
 
   const handleProductsFromReceipt = (products: Array<{ name: string; category: string; quantity?: number }>) => {
