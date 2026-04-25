@@ -57,8 +57,6 @@ import {
 } from 'lucide-react';
 import { GripVertical } from 'lucide-react';
 
-localStorage.clear();
-
 interface Category {
   id: string;
   name: string;
