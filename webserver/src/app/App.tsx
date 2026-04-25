@@ -69,11 +69,11 @@ const categories: Category[] = [
 
 // Koelkast zones configuratie
 const defaultFridgeZones = {
-  vriezer: ['ijs', null, null], // 3 slots
-  koelvakBoven: ['zuivel', 'vlees', 'vis'], // 3 slots
+  vriezer: [null, null, null], // 3 slots
+  koelvakBoven: [null, null, null], // 3 slots
   koelvakOnder: [null, null, null], // 3 lege slots voor nieuwe categorieën
-  groentelade: ['groenten', 'fruit', null], // 3 slots
-  deur: ['dranken', null, null, null], // 4 slots
+  groentelade: [null, null, null], // 3 slots
+  deur: [null, null, null, null], // 4 slots
 };
 
 // Detect if device supports touch
@@ -93,19 +93,10 @@ const getIconByName = (name: string) => {
 };
 
 export default function App() {
-  const [inventory, setInventory] = useState<Record<string, FoodItem[]>>(() => {
-    // Clear old inventory data to force reload of sample data
-    localStorage.removeItem('inventory');
-    
-    // Return sample inventory by default
-    const defaultInventory = {
-    };
-    
-    // Save to localStorage so it persists
-    localStorage.setItem('inventory', JSON.stringify(defaultInventory));
-    
-    return defaultInventory;
-  });
+const [inventory, setInventory] = useState<Record<string, FoodItem[]>>(() => {
+  return {};
+});
+
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [showAddProductModal, setShowAddProductModal] = useState(false);
   const [showReceiptScanModal, setShowReceiptScanModal] = useState(false);
