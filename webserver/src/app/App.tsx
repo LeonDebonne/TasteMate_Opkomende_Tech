@@ -424,7 +424,7 @@ const [inventory, setInventory] = useState<Record<string, FoodItem[]>>(() => {
   categoryId: string,
   quantity: number
 ) => {
-  console.log("Product toevoegen:", name, expiryDate, categoryId, quantity);
+  console.log("HANDLE ADD PRODUCT WORDT UITGEVOERD");
 
   handleAddItem(categoryId, name, expiryDate, quantity);
 
