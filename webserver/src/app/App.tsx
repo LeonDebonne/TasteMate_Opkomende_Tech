@@ -467,14 +467,32 @@ const [inventory, setInventory] = useState<Record<string, FoodItem[]>>(() => {
   };
 
   const handleDeleteCategory = useCallback((categoryId: string, zone: string, index: number) => {
-    // Remove category from zone (replace with null)
-    setFridgeZones((prevZones: any) => {
-      const newZones = { ...prevZones };
-      const zoneSlots = [...newZones[zone]];
-      zoneSlots[index] = null;
-      newZones[zone] = zoneSlots;
-      return newZones;
-    });
+  setFridgeZones((prevZones: any) => {
+    const newZones = { ...prevZones };
+
+    if (!newZones[zone]) {
+      return prevZones;
+    }
+
+    const zoneSlots = [...newZones[zone]];
+    zoneSlots[index] = null;
+    newZones[zone] = zoneSlots;
+
+    return newZones;
+  });
+
+  setCustomCategories(prev => prev.filter(cat => cat.id !== categoryId));
+
+  setInventory(prev => {
+    const newInventory = { ...prev };
+    delete newInventory[categoryId];
+    return newInventory;
+  });
+
+  if (selectedCategory === categoryId) {
+    setSelectedCategory(null);
+  }
+}, [selectedCategory]);
 
     // Also remove from custom categories if it's custom
     if (categoryId.startsWith('custom_')) {
