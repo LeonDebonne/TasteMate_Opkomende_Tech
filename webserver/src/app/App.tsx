@@ -57,6 +57,8 @@ import {
 } from 'lucide-react';
 import { GripVertical } from 'lucide-react';
 
+localStorage.clear();
+
 interface Category {
   id: string;
   name: string;
@@ -466,33 +468,28 @@ const [inventory, setInventory] = useState<Record<string, FoodItem[]>>(() => {
     setShowNewCategoryModal(true);
   };
 
-const handleDeleteCategory = useCallback((categoryId: string, zone: string, index: number) => {
-  setFridgeZones((prevZones: any) => {
-    const newZones = { ...prevZones };
+  const handleDeleteCategory = useCallback((categoryId: string, zone: string, index: number) => {
+    // Remove category from zone (replace with null)
+    setFridgeZones((prevZones: any) => {
+      const newZones = { ...prevZones };
+      const zoneSlots = [...newZones[zone]];
+      zoneSlots[index] = null;
+      newZones[zone] = zoneSlots;
+      return newZones;
+    });
 
-    if (!newZones[zone]) {
-      return prevZones;
+    // Also remove from custom categories if it's custom
+    if (categoryId.startsWith('custom_')) {
+      setCustomCategories(prev => prev.filter(cat => cat.id !== categoryId));
     }
 
-    const zoneSlots = [...newZones[zone]];
-    zoneSlots[index] = null;
-    newZones[zone] = zoneSlots;
-
-    return newZones;
-  });
-
-  setCustomCategories(prev => prev.filter(cat => cat.id !== categoryId));
-
-  setInventory(prev => {
-    const newInventory = { ...prev };
-    delete newInventory[categoryId];
-    return newInventory;
-  });
-
-  if (selectedCategory === categoryId) {
-    setSelectedCategory(null);
-  }
-}, [selectedCategory]);
+    // Remove inventory for this category
+    setInventory(prev => {
+      const newInventory = { ...prev };
+      delete newInventory[categoryId];
+      return newInventory;
+    });
+  }, []);
 
   const handleSelectColorTheme = (themeId: string) => {
     setColorTheme(themeId);
