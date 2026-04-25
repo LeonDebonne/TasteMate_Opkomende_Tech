@@ -2,11 +2,11 @@
     "categories": [],
     "products": [
         {
-            "id": "1777109301.53624",
-            "name": "Melk",
+            "id": "1777110861.121461",
+            "name": "Mayo",
             "quantity": 1,
-            "categoryId": "",
-            "expiryDate": "2026-04-30",
+            "categoryId": "custom_1777109277730",
+            "expiryDate": "2026-05-02",
             "addedAt": "2026-04-25"
         }
     ]
