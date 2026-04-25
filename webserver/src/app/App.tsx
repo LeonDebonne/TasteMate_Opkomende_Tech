@@ -887,7 +887,22 @@ const [inventory, setInventory] = useState<Record<string, FoodItem[]>>(() => {
             categoryName={selectedCategoryData.name}
             categoryId={selectedCategory}
             items={getCategoryItems(selectedCategory)}
-            onAddItem={(name, expiryDate, quantity) => handleAddItem(selectedCategory, name, expiryDate, quantity)}
+            onAddItem={async (name, expiryDate, quantity) => {
+              handleAddItem(selectedCategory, name, expiryDate, quantity);
+
+              await fetch("http://localhost:5000/products", {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                  name,
+                  quantity,
+                  categoryId: selectedCategory,
+                  expiryDate,
+                }),
+              });
+            }}
             onRemoveItem={(itemId) => handleRemoveItem(selectedCategory, itemId)}
             onUpdateQuantity={(itemId, newQuantity) => handleUpdateQuantity(selectedCategory, itemId, newQuantity)}
             onUpdateExpiryDate={(itemId, newExpiryDate) => handleUpdateExpiryDate(selectedCategory, itemId, newExpiryDate)}

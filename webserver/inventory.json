@@ -8,6 +8,14 @@
             "categoryId": "custom_1777109277730",
             "expiryDate": "2026-05-02",
             "addedAt": "2026-04-25"
+        },
+        {
+            "id": "1777111022.414914",
+            "name": "Mozarella",
+            "quantity": 1,
+            "categoryId": "custom_1777110450891",
+            "expiryDate": "2026-05-02",
+            "addedAt": "2026-04-25"
         }
     ]
 }
