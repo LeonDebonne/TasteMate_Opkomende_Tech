@@ -73,7 +73,6 @@ async def main():
                 model="gemini-2.5-flash", contents=berichten
             )
             reply = resp.text.strip()
-            reply = reply.removeprefix("Assistent:").strip()
             print(f"Assistent: {reply}")
 
             geschiedenis.append({"role": "assistant", "content": reply})
@@ -82,7 +81,4 @@ async def main():
             print("Stel je volgende vraag.")
 
 
-try:
-    asyncio.run(main())
-except KeyboardInterrupt:
-    pass
+asyncio.run(main())
