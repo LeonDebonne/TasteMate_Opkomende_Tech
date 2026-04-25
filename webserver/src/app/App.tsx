@@ -109,49 +109,6 @@ export default function App() {
     
     // Return sample inventory by default
     const defaultInventory = {
-      groenten: [
-        { id: '1', name: 'Wortelen', expiryDate: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString().split('T')[0], quantity: 2 },
-        { id: '2', name: 'Komkommer', expiryDate: new Date(Date.now() + 5 * 24 * 60 * 60 * 1000).toISOString().split('T')[0], quantity: 1 },
-        { id: '3', name: 'Tomaten', expiryDate: new Date(Date.now() + 4 * 24 * 60 * 60 * 1000).toISOString().split('T')[0], quantity: 4 },
-        { id: '4', name: 'Paprika', expiryDate: new Date(Date.now() + 6 * 24 * 60 * 60 * 1000).toISOString().split('T')[0], quantity: 3 },
-        { id: '5', name: 'Sla', expiryDate: new Date(Date.now() + 2 * 24 * 60 * 60 * 1000).toISOString().split('T')[0], quantity: 1 },
-      ],
-      fruit: [
-        { id: '6', name: 'Appels', expiryDate: new Date(Date.now() + 10 * 24 * 60 * 60 * 1000).toISOString().split('T')[0], quantity: 6 },
-        { id: '7', name: 'Bananen', expiryDate: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000).toISOString().split('T')[0], quantity: 5 },
-        { id: '8', name: 'Sinaasappels', expiryDate: new Date(Date.now() + 8 * 24 * 60 * 60 * 1000).toISOString().split('T')[0], quantity: 4 },
-        { id: '9', name: 'Druiven', expiryDate: new Date(Date.now() + 4 * 24 * 60 * 60 * 1000).toISOString().split('T')[0], quantity: 1 },
-      ],
-      zuivel: [
-        { id: '10', name: 'Melk', expiryDate: new Date(Date.now() + 5 * 24 * 60 * 60 * 1000).toISOString().split('T')[0], quantity: 2 },
-        { id: '11', name: 'Yoghurt', expiryDate: new Date(Date.now() + 12 * 24 * 60 * 60 * 1000).toISOString().split('T')[0], quantity: 8 },
-        { id: '12', name: 'Kaas', expiryDate: new Date(Date.now() + 20 * 24 * 60 * 60 * 1000).toISOString().split('T')[0], quantity: 1 },
-        { id: '13', name: 'Eieren (doos)', expiryDate: new Date(Date.now() + 14 * 24 * 60 * 60 * 1000).toISOString().split('T')[0], quantity: 1 },
-        { id: '14', name: 'Boter', expiryDate: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString().split('T')[0], quantity: 1 },
-      ],
-      vlees: [
-        { id: '15', name: 'Kipfilet (500g)', expiryDate: new Date(Date.now() + 2 * 24 * 60 * 60 * 1000).toISOString().split('T')[0], quantity: 1 },
-        { id: '16', name: 'Gehakt (300g)', expiryDate: new Date(Date.now() + 1 * 24 * 60 * 60 * 1000).toISOString().split('T')[0], quantity: 1 },
-        { id: '17', name: 'Bacon', expiryDate: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString().split('T')[0], quantity: 1 },
-      ],
-      vis: [
-        { id: '18', name: 'Zalm (filet)', expiryDate: new Date(Date.now() + 2 * 24 * 60 * 60 * 1000).toISOString().split('T')[0], quantity: 2 },
-        { id: '19', name: 'Garnalen (250g)', expiryDate: new Date(Date.now() + 1 * 24 * 60 * 60 * 1000).toISOString().split('T')[0], quantity: 1 },
-      ],
-      dranken: [
-        { id: '20', name: 'Sinaasappelsap', expiryDate: new Date(Date.now() + 10 * 24 * 60 * 60 * 1000).toISOString().split('T')[0], quantity: 1 },
-        { id: '21', name: 'Cola (blikjes)', expiryDate: new Date(Date.now() + 60 * 24 * 60 * 60 * 1000).toISOString().split('T')[0], quantity: 6 },
-        { id: '22', name: 'Water (flessen)', expiryDate: new Date(Date.now() + 180 * 24 * 60 * 60 * 1000).toISOString().split('T')[0], quantity: 4 },
-      ],
-      ijs: [
-        { id: '23', name: 'Vanille ijs (bak)', expiryDate: new Date(Date.now() + 90 * 24 * 60 * 60 * 1000).toISOString().split('T')[0], quantity: 1 },
-        { id: '24', name: 'Pizza', expiryDate: new Date(Date.now() + 120 * 24 * 60 * 60 * 1000).toISOString().split('T')[0], quantity: 2 },
-        { id: '25', name: 'Erwten (bevroren zak)', expiryDate: new Date(Date.now() + 180 * 24 * 60 * 60 * 1000).toISOString().split('T')[0], quantity: 1 },
-      ],
-      overig: [
-        { id: '26', name: 'Mayonaise', expiryDate: new Date(Date.now() + 45 * 24 * 60 * 60 * 1000).toISOString().split('T')[0], quantity: 1 },
-        { id: '27', name: 'Ketchup', expiryDate: new Date(Date.now() + 60 * 24 * 60 * 60 * 1000).toISOString().split('T')[0], quantity: 1 },
-      ],
     };
     
     // Save to localStorage so it persists
