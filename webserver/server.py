@@ -79,6 +79,17 @@ def delete_product(product_id):
 
     return jsonify({"message": "Product verwijderd"})
 
+@app.route("/reset", methods=["POST"])
+def reset_inventory():
+    empty_data = {
+        "categories": [],
+        "products": []
+    }
+
+    save_inventory(empty_data)
+
+    return jsonify({"message": "Inventory reset"})
+
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000, debug=True)
