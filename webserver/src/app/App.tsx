@@ -65,16 +65,6 @@ interface Category {
 }
 
 const categories: Category[] = [
-  { id: 'fruit', name: 'Fruit', icon: Apple, color: 'bg-green-500' },
-  { id: 'groenten', name: 'Groenten', icon: Carrot, color: 'bg-orange-500' },
-  { id: 'zuivel', name: 'Zuivel & Eieren', icon: Milk, color: 'bg-blue-500' },
-  { id: 'vlees', name: 'Vlees', icon: Beef, color: 'bg-red-500' },
-  { id: 'vis', name: 'Vis', icon: Fish, color: 'bg-cyan-500' },
-  { id: 'dranken', name: 'Dranken', icon: Droplet, color: 'bg-indigo-500' },
-  { id: 'ijs', name: 'Ijs & Vriezer', icon: IceCream, color: 'bg-purple-500' },
-  { id: 'overig', name: 'Overig', icon: Wine, color: 'bg-pink-500' },
-  { id: 'blikjes', name: 'Blikjes', icon: Package, color: 'bg-yellow-500' },
-  { id: 'flessen', name: 'Flessen', icon: Beer, color: 'bg-teal-500' },
 ];
 
 // Koelkast zones configuratie
