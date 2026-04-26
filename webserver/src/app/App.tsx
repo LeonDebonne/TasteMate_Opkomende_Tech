@@ -105,50 +105,20 @@ const [inventory, setInventory] = useState<Record<string, FoodItem[]>>(() => {
   const [showNewCategoryModal, setShowNewCategoryModal] = useState(false);
   const [newCategoryZone, setNewCategoryZone] = useState<string>('');
   const [customCategories, setCustomCategories] = useState<Category[]>([]);
-  const [fridgeZones, setFridgeZones] = useState(() => {
-    const saved = localStorage.getItem('fridgeZones');
-    if (saved) {
-      try {
-        return JSON.parse(saved);
-      } catch {
-        return defaultFridgeZones;
-      }
-    }
-    return defaultFridgeZones;
-  });
-  const [zoneOrder, setZoneOrder] = useState<string[]>(() => {
-    const saved = localStorage.getItem('zoneOrder');
-    if (saved) {
-      try {
-        return JSON.parse(saved);
-      } catch {
-        return ['vriezer', 'koelvakBoven', 'koelvakOnder', 'groentelade', 'deur'];
-      }
-    }
-    return ['vriezer', 'koelvakBoven', 'koelvakOnder', 'groentelade', 'deur'];
-  });
-  const [zoneTypes, setZoneTypes] = useState<Record<string, 'kast' | 'deur'>>(() => {
-    const saved = localStorage.getItem('zoneTypes');
-    if (saved) {
-      try {
-        return JSON.parse(saved);
-      } catch {
-        return {
-          vriezer: 'kast',
-          koelvakBoven: 'kast',
-          koelvakOnder: 'kast',
-          groentelade: 'kast',
-          deur: 'deur',
-        };
-      }
-    }
-    return {
-      vriezer: 'kast',
-      koelvakBoven: 'kast',
-      koelvakOnder: 'kast',
-      groentelade: 'kast',
-      deur: 'deur',
-    };
+  const [fridgeZones, setFridgeZones] = useState(defaultFridgeZones);
+  const [zoneOrder, setZoneOrder] = useState<string[]>([
+    'vriezer',
+    'koelvakBoven',
+    'koelvakOnder',
+    'groentelade',
+    'deur',
+  ]);
+  const [zoneTypes, setZoneTypes] = useState<Record<string, 'kast' | 'deur'>>({
+    vriezer: 'kast',
+    koelvakBoven: 'kast',
+    koelvakOnder: 'kast',
+    groentelade: 'kast',
+    deur: 'deur',
   });
   const [colorTheme, setColorTheme] = useState(() => {
     const saved = localStorage.getItem('colorTheme');
@@ -158,28 +128,12 @@ const [inventory, setInventory] = useState<Record<string, FoodItem[]>>(() => {
   const [showZoneManagementModal, setShowZoneManagementModal] = useState(false);
   const [showAddZoneModal, setShowAddZoneModal] = useState(false);
   const [zoneManagementMode, setZoneManagementMode] = useState<'add' | 'remove'>('add');
-  const [zoneNames, setZoneNames] = useState(() => {
-    const saved = localStorage.getItem('zoneNames');
-    if (saved) {
-      try {
-        return JSON.parse(saved);
-      } catch {
-        return {
-          vriezer: 'Vriezer',
-          koelvakBoven: 'Koelvak Boven',
-          koelvakOnder: 'Koelvak Onder',
-          groentelade: 'Groentelade',
-          deur: 'Deur',
-        };
-      }
-    }
-    return {
-      vriezer: 'Vriezer',
-      koelvakBoven: 'Koelvak Boven',
-      koelvakOnder: 'Koelvak Onder',
-      groentelade: 'Groentelade',
-      deur: 'Deur',
-    };
+  const [zoneNames, setZoneNames] = useState<Record<string, string>>({
+    vriezer: 'Vriezer',
+    koelvakBoven: 'Koelvak Boven',
+    koelvakOnder: 'Koelvak Onder',
+    groentelade: 'Groentelade',
+    deur: 'Deur',
   });
   const [editingZone, setEditingZone] = useState<string | null>(null);
   const [showEditZoneNameModal, setShowEditZoneNameModal] = useState(false);
@@ -261,6 +215,9 @@ const [inventory, setInventory] = useState<Record<string, FoodItem[]>>(() => {
   }, []);
 
   useEffect(() => {
+    if (!fridgeZones || !zoneOrder || !zoneTypes || !zoneNames) return;
+    if (zoneOrder.length === 0) return;
+
     fetch("http://localhost:5000/layout", {
       method: "PUT",
       headers: {
@@ -289,15 +246,6 @@ const [inventory, setInventory] = useState<Record<string, FoodItem[]>>(() => {
     localStorage.setItem('modifiedDefaultCategories', JSON.stringify(modifiedToSave));
   }, [modifiedDefaultCategories]);
 
-  // Save fridge zones to localStorage whenever it changes
-  useEffect(() => {
-    localStorage.setItem('fridgeZones', JSON.stringify(fridgeZones));
-  }, [fridgeZones]);
-
-  // Save zone types to localStorage
-  useEffect(() => {
-    localStorage.setItem('zoneTypes', JSON.stringify(zoneTypes));
-  }, [zoneTypes]);
 
   const moveCategory = useCallback((dragIndex: number, hoverIndex: number, dragZone: string, targetZone: string) => {
     setFridgeZones((prevZones: any) => {
@@ -605,19 +553,14 @@ const [inventory, setInventory] = useState<Record<string, FoodItem[]>>(() => {
   };
 
   const handleEditZoneName = (zone: string, newName: string) => {
-    setZoneNames(prev => {
-      const updated = {
-        ...prev,
-        [zone]: newName,
-      };
-      localStorage.setItem('zoneNames', JSON.stringify(updated));
-      return updated;
-    });
+    setZoneNames(prev => ({
+      ...prev,
+      [zone]: newName,
+    }));
   };
 
   const handleReorderZones = (newOrder: string[]) => {
     setZoneOrder(newOrder);
-    localStorage.setItem('zoneOrder', JSON.stringify(newOrder));
   };
 
   const handleAddNewZone = (zoneName: string, zoneType?: 'kast' | 'deur') => {
@@ -655,20 +598,16 @@ const [inventory, setInventory] = useState<Record<string, FoodItem[]>>(() => {
     setZoneNames(prev => {
       const newNames = { ...prev };
       delete newNames[zoneKey];
-      localStorage.setItem('zoneNames', JSON.stringify(newNames));
       return newNames;
     });
+
     setZoneTypes(prev => {
       const newTypes = { ...prev };
       delete newTypes[zoneKey];
-      localStorage.setItem('zoneTypes', JSON.stringify(newTypes));
       return newTypes;
     });
-    setZoneOrder(prev => {
-      const newOrder = prev.filter(z => z !== zoneKey);
-      localStorage.setItem('zoneOrder', JSON.stringify(newOrder));
-      return newOrder;
-    });
+
+    setZoneOrder(prev => prev.filter(z => z !== zoneKey));
   };
 
   // Handle opening edit category modal
