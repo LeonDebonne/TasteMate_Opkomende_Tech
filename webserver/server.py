@@ -90,6 +90,58 @@ def reset_inventory():
 
     return jsonify({"message": "Inventory reset"})
 
+def empty_inventory():
+    return {
+        "categories": [],
+        "products": [],
+        "fridgeZones": {
+            "vriezer": [None, None, None],
+            "koelvakBoven": [None, None, None],
+            "koelvakOnder": [None, None, None],
+            "groentelade": [None, None, None],
+            "deur": [None, None, None, None]
+        },
+        "zoneOrder": ["vriezer", "koelvakBoven", "koelvakOnder", "groentelade", "deur"],
+        "zoneTypes": {
+            "vriezer": "kast",
+            "koelvakBoven": "kast",
+            "koelvakOnder": "kast",
+            "groentelade": "kast",
+            "deur": "deur"
+        },
+        "zoneNames": {
+            "vriezer": "Vriezer",
+            "koelvakBoven": "Koelvak Boven",
+            "koelvakOnder": "Koelvak Onder",
+            "groentelade": "Groentelade",
+            "deur": "Deur"
+        }
+    }
+
+@app.route("/layout", methods=["PUT"])
+def update_layout():
+    data = load_inventory()
+    body = request.json
+
+    data["fridgeZones"] = body.get("fridgeZones", data["fridgeZones"])
+    data["zoneOrder"] = body.get("zoneOrder", data["zoneOrder"])
+    data["zoneTypes"] = body.get("zoneTypes", data["zoneTypes"])
+    data["zoneNames"] = body.get("zoneNames", data["zoneNames"])
+
+    save_inventory(data)
+
+    return jsonify({
+        "message": "Layout opgeslagen",
+        "fridgeZones": data["fridgeZones"],
+        "zoneOrder": data["zoneOrder"],
+        "zoneTypes": data["zoneTypes"],
+        "zoneNames": data["zoneNames"]
+    })
+
+@app.route("/reset", methods=["POST"])
+def reset_inventory():
+    save_inventory(empty_inventory())
+    return jsonify({"message": "Alles gereset"})
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000, debug=True)
