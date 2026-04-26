@@ -432,43 +432,53 @@ const [inventory, setInventory] = useState<Record<string, FoodItem[]>>(() => {
     });
   };
 
-  const handleCreateCategory = async (name: string, iconName: string, color: string, zone: string) => {
-    const newCategory: Category = {
-      id: `custom_${Date.now()}`,
-      name,
-      icon: getIconByName(iconName),
-      color,
-    };
-    await fetch("http://localhost:5000/categories", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        id: newCategory.id,
-        name: newCategory.name,
-      }),
-    });
-    
-    setCustomCategories(prev => [...prev, newCategory]);
-    
-    // Find first empty slot in the zone and replace it with the new category
-    setFridgeZones(prev => {
-      const newZones = { ...prev };
-      const zoneSlots = [...newZones[zone]];
-      const firstEmptyIndex = zoneSlots.findIndex(slot => slot === null);
-      
-      if (firstEmptyIndex !== -1) {
-        zoneSlots[firstEmptyIndex] = newCategory.id;
-      } else {
-        // If no empty slot, add to the end
-        zoneSlots.push(newCategory.id);
-      }
-      
-      newZones[zone] = zoneSlots;
-      return newZones;
-    });
+const handleCreateCategory = async (name: string, iconName: string, color: string, zone: string) => {
+  const newCategory: Category = {
+    id: `custom_${Date.now()}`,
+    name,
+    icon: getIconByName(iconName),
+    color,
   };
+
+  const updatedZones = { ...fridgeZones };
+  const zoneSlots = [...updatedZones[zone]];
+  const firstEmptyIndex = zoneSlots.findIndex(slot => slot === null);
+
+  if (firstEmptyIndex !== -1) {
+    zoneSlots[firstEmptyIndex] = newCategory.id;
+  } else {
+    zoneSlots.push(newCategory.id);
+  }
+
+  updatedZones[zone] = zoneSlots;
+
+  setCustomCategories(prev => [...prev, newCategory]);
+  setFridgeZones(updatedZones);
+
+  await fetch("http://localhost:5000/categories", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      id: newCategory.id,
+      name: newCategory.name,
+    }),
+  });
+
+  await fetch("http://localhost:5000/layout", {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      fridgeZones: updatedZones,
+      zoneOrder,
+      zoneTypes,
+      zoneNames,
+    }),
+  });
+};
 
   const handleOpenNewCategoryModal = (zone: string) => {
     setNewCategoryZone(zone);
