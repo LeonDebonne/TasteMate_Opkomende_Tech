@@ -23,7 +23,7 @@ def load_inventory():
 
 def save_inventory(data):
     with open(DATA_FILE, "w", encoding="utf-8") as file:
-        json.dump(data, file, indent=4, ensure_ascii=False)
+        json.dump(data, file, indent=2)
 
 
 @app.route("/inventory", methods=["GET"])
@@ -123,19 +123,15 @@ def update_layout():
     data = load_inventory()
     body = request.json
 
-    data["fridgeZones"] = body.get("fridgeZones", data["fridgeZones"])
-    data["zoneOrder"] = body.get("zoneOrder", data["zoneOrder"])
-    data["zoneTypes"] = body.get("zoneTypes", data["zoneTypes"])
-    data["zoneNames"] = body.get("zoneNames", data["zoneNames"])
+    data["fridgeZones"] = body.get("fridgeZones", data.get("fridgeZones", {}))
+    data["zoneOrder"] = body.get("zoneOrder", data.get("zoneOrder", []))
+    data["zoneTypes"] = body.get("zoneTypes", data.get("zoneTypes", {}))
+    data["zoneNames"] = body.get("zoneNames", data.get("zoneNames", {}))
 
     save_inventory(data)
 
     return jsonify({
-        "message": "Layout opgeslagen",
-        "fridgeZones": data["fridgeZones"],
-        "zoneOrder": data["zoneOrder"],
-        "zoneTypes": data["zoneTypes"],
-        "zoneNames": data["zoneNames"]
+        "message": "Layout opgeslagen"
     })
 
 @app.route("/reset", methods=["POST"])
