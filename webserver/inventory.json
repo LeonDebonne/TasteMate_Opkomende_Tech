@@ -1,6 +1,26 @@
 {
-  "fridgeZones": {},
-  "zoneOrder": [],
-  "zoneTypes": {},
-  "zoneNames": {}
+  "categories": [],
+  "products": [],
+  "fridgeZones": {
+    "vriezer": [null, null, null],
+    "koelvakBoven": [null, null, null],
+    "koelvakOnder": [null, null, null],
+    "groentelade": [null, null, null],
+    "deur": [null, null, null, null]
+  },
+  "zoneOrder": ["vriezer", "koelvakBoven", "koelvakOnder", "groentelade", "deur"],
+  "zoneTypes": {
+    "vriezer": "kast",
+    "koelvakBoven": "kast",
+    "koelvakOnder": "kast",
+    "groentelade": "kast",
+    "deur": "deur"
+  },
+  "zoneNames": {
+    "vriezer": "Vriezer",
+    "koelvakBoven": "Koelvak Boven",
+    "koelvakOnder": "Koelvak Onder",
+    "groentelade": "Groentelade",
+    "deur": "Deur"
+  }
 }
