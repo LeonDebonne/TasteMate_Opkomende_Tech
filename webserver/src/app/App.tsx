@@ -104,22 +104,7 @@ const [inventory, setInventory] = useState<Record<string, FoodItem[]>>(() => {
   const [showReceiptScanModal, setShowReceiptScanModal] = useState(false);
   const [showNewCategoryModal, setShowNewCategoryModal] = useState(false);
   const [newCategoryZone, setNewCategoryZone] = useState<string>('');
-  const [customCategories, setCustomCategories] = useState<Category[]>(() => {
-    const saved = localStorage.getItem('customCategories');
-    if (saved) {
-      try {
-        const parsed = JSON.parse(saved);
-        // Recreate icon references
-        return parsed.map((cat: any) => ({
-          ...cat,
-          icon: getIconByName(cat.iconName),
-        }));
-      } catch {
-        return [];
-      }
-    }
-    return [];
-  });
+  const [customCategories, setCustomCategories] = useState<Category[]>([]);
   const [fridgeZones, setFridgeZones] = useState(() => {
     const saved = localStorage.getItem('fridgeZones');
     if (saved) {
@@ -234,14 +219,42 @@ const [inventory, setInventory] = useState<Record<string, FoodItem[]>>(() => {
     ...customCategories
   ];
 
-  // Save custom categories to localStorage
   useEffect(() => {
-    const categoriesToSave = customCategories.map(cat => ({
-      ...cat,
-      iconName: cat.icon.name || 'Apple', // Store icon name instead of component
-    }));
-    localStorage.setItem('customCategories', JSON.stringify(categoriesToSave));
-  }, [customCategories]);
+    fetch("http://localhost:5000/inventory")
+      .then((res) => res.json())
+      .then((data) => {
+        const groupedInventory: Record<string, FoodItem[]> = {};
+
+        data.products.forEach((product: any) => {
+          const categoryId = product.categoryId || "";
+
+          if (!groupedInventory[categoryId]) {
+            groupedInventory[categoryId] = [];
+          }
+
+          groupedInventory[categoryId].push({
+            id: product.id,
+            name: product.name,
+            quantity: product.quantity,
+            expiryDate: product.expiryDate,
+          });
+        });
+
+        setInventory(groupedInventory);
+
+        setCustomCategories(
+          data.categories.map((cat: any) => ({
+            id: cat.id,
+            name: cat.name,
+            icon: Apple,
+            color: "bg-gray-500",
+          }))
+        );
+      })
+      .catch((err) => {
+        console.error("Kon inventory niet laden:", err);
+      });
+  }, []);
 
   // Save modified default categories to localStorage
   useEffect(() => {
@@ -264,11 +277,6 @@ const [inventory, setInventory] = useState<Record<string, FoodItem[]>>(() => {
   useEffect(() => {
     localStorage.setItem('zoneTypes', JSON.stringify(zoneTypes));
   }, [zoneTypes]);
-
-  // Save inventory to localStorage whenever it changes
-  useEffect(() => {
-    localStorage.setItem('inventory', JSON.stringify(inventory));
-  }, [inventory]);
 
   const moveCategory = useCallback((dragIndex: number, hoverIndex: number, dragZone: string, targetZone: string) => {
     setFridgeZones((prevZones: any) => {

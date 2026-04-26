@@ -1,4 +1,9 @@
 {
-  "categories": [],
-  "products": []
+    "categories": [
+        {
+            "id": "custom_1777211464956",
+            "name": "Sauzen"
+        }
+    ],
+    "products": []
 }
