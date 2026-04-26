@@ -250,15 +250,16 @@ const [inventory, setInventory] = useState<Record<string, FoodItem[]>>(() => {
             color: "bg-gray-500",
           }))
         );
+        if (data.fridgeZones) setFridgeZones(data.fridgeZones);
+        if (data.zoneOrder) setZoneOrder(data.zoneOrder);
+        if (data.zoneTypes) setZoneTypes(data.zoneTypes);
+        if (data.zoneNames) setZoneNames(data.zoneNames);
       })
       .catch((err) => {
         console.error("Kon inventory niet laden:", err);
       });
-      if (data.fridgeZones) setFridgeZones(data.fridgeZones);
-      if (data.zoneOrder) setZoneOrder(data.zoneOrder);
-      if (data.zoneTypes) setZoneTypes(data.zoneTypes);
-      if (data.zoneNames) setZoneNames(data.zoneNames);
   }, []);
+
   useEffect(() => {
     fetch("http://localhost:5000/layout", {
       method: "PUT",
@@ -275,6 +276,7 @@ const [inventory, setInventory] = useState<Record<string, FoodItem[]>>(() => {
       console.error("Kon layout niet opslaan:", err);
     });
   }, [fridgeZones, zoneOrder, zoneTypes, zoneNames]);
+
   // Save modified default categories to localStorage
   useEffect(() => {
     const modifiedToSave: Record<string, any> = {};
