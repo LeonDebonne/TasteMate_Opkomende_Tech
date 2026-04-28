@@ -1,10 +1,10 @@
 from gpiozero import DistanceSensor #library voor afstandssensor
 from time import sleep #library voor tijdsvertraging
 
-TRIG_PIN = 23 #definieeren GPIO pinnen
+TRIG_PIN = 23 #definieren GPIO pinnen
 ECHO_PIN = 24
 
-sensor = DistanceSensor(echo=ECHO_PIN, trigger=TRIG_PIN, max_distance=2.0) # sensor definieeren
+sensor = DistanceSensor(echo=ECHO_PIN, trigger=TRIG_PIN, max_distance=2.0) # sensor definieren
 
 print("Afstandssensor test gestart") 
 print("Druk Ctrl + C om te stoppen")
