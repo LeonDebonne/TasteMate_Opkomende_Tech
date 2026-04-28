@@ -16,4 +16,4 @@ try:
         sleep(0.5) #wachten voor 0.5s
 
 except KeyboardInterrupt:
-    print("\nTest gestopt") # mogelijkheid test stoppen
+    print("\nTest gestopt") # mogelijkheid test stoppen bij Ctrl + C
