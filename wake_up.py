@@ -39,6 +39,8 @@ try:
 
     while True:
 
+        distance = sensor.distance # afstand meten
+
         if distance <= DETECT_DISTANCE: # uitvoeren als afstand kleiner of gelijk is aan 50 cm
 
             last_detection_time = time.time() # tijd van laatste interactie opslaan
