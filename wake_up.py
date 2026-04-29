@@ -60,5 +60,5 @@ try:
 
         time.sleep(0.2)
 
-except KeyboardInterrupt: # programma stoppen
+except KeyboardInterrupt: # programma stoppen bij Ctrl + C
     print("\nProgramma gestopt")
