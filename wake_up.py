@@ -45,34 +45,38 @@ try:
         distance = sensor.distance # afstand meten
         current_mouse_position = pyautogui.position() # huidige muispositie ophalen
 
-        if current_mouse_position != last_mouse_position: # controleren op muis of touchscreen interactie
+        person_detected = distance <= DETECT_DISTANCE # controleren of persoon gedetecteerd wordt
+        interaction_detected = current_mouse_position != last_mouse_position # controleren op muis of touchscreen interactie
 
-            last_detection_time = time.time()
-            last_mouse_position = current_mouse_position
+        if person_detected: # persoon gedetecteerd
 
-        if distance <= DETECT_DISTANCE: # persoon gedetecteerd
+            last_detection_time = time.time() # tijd van laatste detectie bijhouden
 
-            last_detection_time = time.time() # tijd van laatste interactie opslaan
             if not screen_is_on: # alleen uitvoeren als scherm nog niet aan is
 
                 turn_screen_on()
                 beep_once()
                 screen_is_on = True # schermstatus bijwerken
 
-        else: # er wordt niemand gedetecteerd
+        if interaction_detected: # controleren op muis of touchscreen interactie
 
-            if not screen_is_on:
+            last_detection_time = time.time() # tijd van laatste interactie opslaan
+            last_mouse_position = current_mouse_position
 
-                print("Niemand gedetecteerd, wachten 30 seconden")
-                time.sleep(WAIT_NO_DETECTION) # 30 seconden wachten tot volgende scan
-
-        # scherm uitschakelen na timeout
         if screen_is_on:
 
-            if time.time() - last_detection_time >= SCREEN_TIMEOUT: # controleren of er 10 seconden geen interactie is
+            if time.time() - last_detection_time >= SCREEN_TIMEOUT: # controleren of er 10 seconden geen interactie of detectie is
 
                 turn_screen_off()
                 screen_is_on = False
+                time.sleep(WAIT_NO_DETECTION) # 30 seconden wachten tot volgende scan
+
+        else:
+
+            if not person_detected: # er wordt niemand gedetecteerd
+
+                print("Niemand gedetecteerd, wachten 30 seconden")
+                time.sleep(WAIT_NO_DETECTION) # 30 seconden wachten tot volgende scan
 
         time.sleep(0.2)
 
