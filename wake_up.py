@@ -1,6 +1,7 @@
 from gpiozero import DistanceSensor, Buzzer # librarie voor afstandssensor en buzzer
 import time # library voor tijdsvertraging
 import subprocess # library voor uitvoeren systeemcommando's (scherm aan/uit)
+import pyautogui # library voor muisbewegingen
 
 TRIG_PIN = 23 # definieren GPIO pinnen
 ECHO_PIN = 24
@@ -21,6 +22,8 @@ WAIT_NO_DETECTION = 30 # 30 seconden wachten als niemand gedetecteerd wordt
 screen_is_on = False # variabele om schermstatus bij te houden
 last_detection_time = 0 # tijd van laatste detectie bijhouden
 
+last_mouse_position = pyautogui.position() # laatste muispositie opslaan
+
 def turn_screen_on():
     subprocess.run(["wlr-randr", "--output", "HDMI-A-1", "--on"]) # functie om scherm aan te zetten
 
@@ -40,25 +43,36 @@ try:
     while True:
 
         distance = sensor.distance # afstand meten
+        current_mouse_position = pyautogui.position() # huidige muispositie ophalen
 
-        if distance <= DETECT_DISTANCE: # uitvoeren als afstand kleiner of gelijk is aan 50 cm
+        if current_mouse_position != last_mouse_position: # controleren op muis of touchscreen interactie
+
+            last_detection_time = time.time()
+            last_mouse_position = current_mouse_position
+
+        if distance <= DETECT_DISTANCE: # persoon gedetecteerd
 
             last_detection_time = time.time() # tijd van laatste interactie opslaan
-
             if not screen_is_on: # alleen uitvoeren als scherm nog niet aan is
 
                 turn_screen_on()
                 beep_once()
-
                 screen_is_on = True # schermstatus bijwerken
 
+        else: # er wordt niemand gedetecteerd
+
+            if not screen_is_on:
+
+                print("Niemand gedetecteerd, wachten 30 seconden")
+                time.sleep(WAIT_NO_DETECTION) # 30 seconden wachten tot volgende scan
+
+        # scherm uitschakelen na timeout
         if screen_is_on:
 
             if time.time() - last_detection_time >= SCREEN_TIMEOUT: # controleren of er 10 seconden geen interactie is
 
                 turn_screen_off()
                 screen_is_on = False
-                time.sleep(WAIT_NO_DETECTION)
 
         time.sleep(0.2)
 
