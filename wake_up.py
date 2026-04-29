@@ -22,10 +22,10 @@ screen_is_on = False # variabele om schermstatus bij te houden
 last_detection_time = 0 # tijd van laatste detectie bijhouden
 
 def turn_screen_on():
-    subprocess.run(["xset", "dpms", "force", "on"]) # functie om scherm aan te zetten
+    subprocess.run(["wlr-randr", "--output", "HDMI-A-1", "--on"]) # functie om scherm aan te zetten
 
 def turn_screen_off():
-    subprocess.run(["xset", "dpms", "force", "off"]) # functie om scherm uit te zetten
+    subprocess.run(["wlr-randr", "--output", "HDMI-A-1", "--off"]) # functie om scherm uit te zetten
 
 
 def beep_once():
