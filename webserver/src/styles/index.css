@@ -129,3 +129,19 @@
     opacity: 0;
   }
 }
+html, body {
+  margin: 0;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+}
+
+#root {
+  width: 100vh;
+  height: 100vw;
+  transform: rotate(90deg);
+  transform-origin: top left;
+  position: absolute;
+  top: 0;
+  left: 100vw;
+}
