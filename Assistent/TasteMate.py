@@ -29,13 +29,19 @@ with open(inventory_path, "r", encoding="utf-8") as f:
 def inventory_naar_tekst(inventory):
     regels = []
     zone_namen = inventory.get("zoneNames", {})
+    categories = {c["id"]: c["name"] for c in inventory.get("categories", [])}
 
     for zone_id, producten in inventory["fridgeZones"].items():
         zone_naam = zone_namen.get(zone_id, zone_id)
         for product in producten:
-            if product is not None:
+            if product is None:
+                continue
+            if isinstance(product, str):
+                naam = categories.get(product, product)
+                regel = f"- {naam}: {zone_naam}"
+            else:
                 regel = f"- {product['naam']}: {zone_naam}, houdbaar tot {product.get('houdbaarheidsdatum', 'onbekend')}"
-                regels.append(regel)
+            regels.append(regel)
 
     if not regels:
         return "De koelkast is momenteel leeg."
