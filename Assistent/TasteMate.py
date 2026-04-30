@@ -4,6 +4,8 @@ import edge_tts
 import asyncio
 import pygame
 import io
+import json
+import os
 from key import GEMINI_API_KEY
 
 # Verbinding maken met Gemini AI
@@ -15,16 +17,38 @@ r = sr.Recognizer()
 # Audiospeler opstarten
 pygame.mixer.init()
 
+# Inventory inlezen vanuit JSON
+base_dir = os.path.dirname(os.path.abspath(__file__))
+inventory_path = os.path.join(base_dir, "..", "webserver", "inventory.json")
+
+with open(inventory_path, "r", encoding="utf-8") as f:
+    inventory = json.load(f)
+
+
+# Inventory omzetten naar leesbare tekst voor de context
+def inventory_naar_tekst(inventory):
+    regels = []
+    zone_namen = inventory.get("zoneNames", {})
+
+    for zone_id, producten in inventory["fridgeZones"].items():
+        zone_naam = zone_namen.get(zone_id, zone_id)
+        for product in producten:
+            if product is not None:
+                regel = f"- {product['naam']}: {zone_naam}, houdbaar tot {product.get('houdbaarheidsdatum', 'onbekend')}"
+                regels.append(regel)
+
+    if not regels:
+        return "De koelkast is momenteel leeg."
+
+    return "\n".join(regels)
+
+
 # Instructies voor Gemini: wie hij is en welke producten hij kent
-context = """
+context = f"""
 Je bent een koelkastassistent. Je helpt de gebruiker met het bijhouden van voedsel in de koelkast.
 Je kent de locaties en houdbaarheidsdata van de volgende producten:
 
-- Melk: bovenste schap, houdbaar tot 28/04/2026
-- Kaas: middelste schap, houdbaar tot 10/05/2026
-- Boter: deurrek, houdbaar tot 15/06/2026
-- Yoghurt: onderste schap, houdbaar tot 30/04/2026
-- Appelsap: deurrek, houdbaar tot 01/08/2026
+{inventory_naar_tekst(inventory)}
 
 Geef korte en duidelijke antwoorden. Begin je antwoord nooit met "Assistent:".
 """
