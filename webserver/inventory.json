@@ -1,5 +1,9 @@
 {
   "categories": [
+    {
+      "id": "custom_1777541147883",
+      "name": "Saus"
+    }
   ],
   "products": [],
   "fridgeZones": {
@@ -16,7 +20,7 @@
     ],
     "koelvakBoven": [
       null,
-      null,
+      "custom_1777541147883",
       null
     ],
     "koelvakOnder": [
