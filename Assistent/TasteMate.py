@@ -29,7 +29,9 @@ with open(inventory_path, "r", encoding="utf-8") as f:
 def inventory_naar_tekst(inventory):
     regels = []
     zone_namen = inventory.get("zoneNames", {})
-    categories = {c["id"]: c["name"] for c in inventory.get("categories", [])}
+    categories = {}
+    for c in inventory.get("categories", []):
+        categories[c["id"]] = c["name"]
 
     for zone_id, producten in inventory["fridgeZones"].items():
         zone_naam = zone_namen.get(zone_id, zone_id)
@@ -60,22 +62,23 @@ De categorieën zijn verschillende zones in de koelkast. Bv. Sauzen
 In de categrorieën zijn verschillende producten terug te vinden met hun bijhorende houdbaarheidsdata.
 Hier onder een voorbeeld van de Json-file:
 
-"categories": [
-    {
+categories": [
+    {{
       "id": "custom_1777541147883",
       "name": "Saus"
-    }
+    }}
   ],
   "products": [
-    {
+    {{
       "id": "1777544220.980168",
       "name": "Ketchup",
       "quantity": 1,
       "categoryId": "custom_1777541147883",
       "expiryDate": "2026-05-07",
       "addedAt": "2026-04-30"
-    }
-
+    }}
+Geef enkel outputs die op menselijke conversatie lijkt. Geen leestekens of speciale tekens voorlezen.
+Antwoord alleen op de vraag, geen extra informatie zoals houdbaarheidsdata of positie meegeven als hier niet explesiet om gevraagd word.
 Geef korte en duidelijke antwoorden. Begin je antwoord nooit met "Assistent:".
 """
 
@@ -152,13 +155,18 @@ async def main():
                     berichten += f"Assistent: {bericht['content']}\n"
 
             # Gesprek naar Gemini sturen en antwoord ontvangen
-            resp = client.models.generate_content(
-                model="gemini-2.5-flash", contents=berichten
-            )
+            try:
+                resp = client.models.generate_content(
+                    model="gemini-2.5-flash", contents=berichten
+                )
+                # Antwoord ophalen en "Assistent:" verwijderen als Gemini dat toevoegt
+                reply = resp.text.strip()
+                reply = reply.removeprefix("Assistent:").strip()
+            except Exception as e:
+                print(f"Gemini fout: {e}")
+                await speak("Gemini is momenteel overbelast, probeer het opnieuw.")
+                continue
 
-            # Antwoord ophalen en "Assistent:" verwijderen als Gemini dat toevoegt
-            reply = resp.text.strip()
-            reply = reply.removeprefix("Assistent:").strip()
             print(f"Assistent: {reply}")
 
             # Antwoord toevoegen aan geschiedenis
