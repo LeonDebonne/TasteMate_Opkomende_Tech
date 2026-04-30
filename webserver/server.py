@@ -12,10 +12,7 @@ DATA_FILE = "inventory.json"
 
 def load_inventory():
     if not os.path.exists(DATA_FILE):
-        return {
-            "categories": [],
-            "products": []
-        }
+       return empty_inventory()
 
     with open(DATA_FILE, "r", encoding="utf-8") as file:
         return json.load(file)
@@ -84,26 +81,32 @@ def empty_inventory():
         "categories": [],
         "products": [],
         "fridgeZones": {
-            "vriezer": [None, None, None],
+            "deur": [None, None, None, None],
+            "groentelade": [None, None, None],
             "koelvakBoven": [None, None, None],
             "koelvakOnder": [None, None, None],
-            "groentelade": [None, None, None],
-            "deur": [None, None, None, None]
+            "vriezer": [None, None, None]
         },
-        "zoneOrder": ["vriezer", "koelvakBoven", "koelvakOnder", "groentelade", "deur"],
+        "zoneOrder": [
+            "vriezer",
+            "koelvakBoven",
+            "koelvakOnder",
+            "groentelade",
+            "deur"
+        ],
         "zoneTypes": {
-            "vriezer": "kast",
+            "deur": "deur",
+            "groentelade": "kast",
             "koelvakBoven": "kast",
             "koelvakOnder": "kast",
-            "groentelade": "kast",
-            "deur": "deur"
+            "vriezer": "kast"
         },
         "zoneNames": {
-            "vriezer": "Vriezer",
+            "deur": "Deur",
+            "groentelade": "Groentelade",
             "koelvakBoven": "Koelvak Boven",
             "koelvakOnder": "Koelvak Onder",
-            "groentelade": "Groentelade",
-            "deur": "Deur"
+            "vriezer": "Vriezer"
         }
     }
 
