@@ -131,17 +131,24 @@
 }
 html, body {
   margin: 0;
+  padding: 0;
+  overflow: hidden;
   width: 100vw;
   height: 100vh;
-  overflow: hidden;
 }
 
+/* Draai EN schaal zodat het scherm volledig gevuld is */
 #root {
-  width: 100vh;
-  height: 100vw;
-  transform: rotate(90deg);
-  transform-origin: top left;
   position: absolute;
   top: 0;
-  left: 100vw;
+  left: 0;
+
+  width: 100vh;
+  height: 100vw;
+
+  transform: rotate(90deg) translateY(-100%);
+  transform-origin: top left;
+
+  overflow: hidden;
+}: 100vw;
 }
