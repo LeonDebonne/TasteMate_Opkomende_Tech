@@ -16,8 +16,17 @@
     }
   ],
   "fridgeZones": {
-    "deur": [
+    "vriezer": [
       null,
+      null,
+      null
+    ],
+    "koelvakBoven": [
+      null,
+      null,
+      null
+    ],
+    "koelvakOnder": [
       null,
       null,
       null
@@ -27,17 +36,8 @@
       null,
       null
     ],
-    "koelvakBoven": [
-      "custom_1777566340382",
+    "deur": [
       null,
-      null
-    ],
-    "koelvakOnder": [
-      null,
-      null,
-      null
-    ],
-    "vriezer": [
       null,
       null,
       null
@@ -51,17 +51,19 @@
     "deur"
   ],
   "zoneTypes": {
-    "deur": "deur",
-    "groentelade": "kast",
+    "vriezer": "kast",
     "koelvakBoven": "kast",
     "koelvakOnder": "kast",
-    "vriezer": "kast"
+    "groentelade": "kast",
+    "deur": "deur"
   },
   "zoneNames": {
-    "deur": "Deur",
-    "groentelade": "Groentelade",
+    "vriezer": "Vriezer",
     "koelvakBoven": "Koelvak Boven",
     "koelvakOnder": "Koelvak Onder",
-    "vriezer": "Vriezer"
+    "groentelade": "Groentelade",
+    "deur": "Deur"
+  }
+} "Vriezer"
   }
 }
