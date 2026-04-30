@@ -125,19 +125,8 @@ def update_layout():
 
 @app.route("/reset", methods=["POST"])
 def reset_inventory():
-    data = {
-        "products": [],
-        "categories": [],
-        "fridgeZones": {},
-        "zoneOrder": [],
-        "zoneTypes": {},
-        "zoneNames": {}
-    }
-
-    with open("inventory.json", "w") as f:
-        json.dump(data, f, indent=2)
-
-    return {"status": "reset"}
+    save_inventory(empty_inventory())
+    return jsonify({"message": "Alles gereset"})
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000, debug=True)

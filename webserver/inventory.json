@@ -1,20 +1,14 @@
 {
   "categories": [
+    {
+      "id": "custom_1777541147883",
+      "name": "Saus"
+    }
   ],
-  "products": [
-  ],
+  "products": [],
   "fridgeZones": {
-    "vriezer": [
+    "deur": [
       null,
-      null,
-      null
-    ],
-    "koelvakBoven": [
-      null,
-      null,
-      null
-    ],
-    "koelvakOnder": [
       null,
       null,
       null
@@ -24,8 +18,17 @@
       null,
       null
     ],
-    "deur": [
+    "koelvakBoven": [
+      "custom_1777541147883",
       null,
+      null
+    ],
+    "koelvakOnder": [
+      null,
+      null,
+      null
+    ],
+    "vriezer": [
       null,
       null,
       null
@@ -39,17 +42,17 @@
     "deur"
   ],
   "zoneTypes": {
-    "vriezer": "kast",
+    "deur": "deur",
+    "groentelade": "kast",
     "koelvakBoven": "kast",
     "koelvakOnder": "kast",
-    "groentelade": "kast",
-    "deur": "deur"
+    "vriezer": "kast"
   },
   "zoneNames": {
-    "vriezer": "Vriezer",
+    "deur": "Deur",
+    "groentelade": "Groentelade",
     "koelvakBoven": "Koelvak Boven",
     "koelvakOnder": "Koelvak Onder",
-    "groentelade": "Groentelade",
-    "deur": "Deur"
+    "vriezer": "Vriezer"
   }
 }
