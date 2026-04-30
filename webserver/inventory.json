@@ -1,19 +1,7 @@
 {
   "categories": [
-    {
-      "id": "custom_1777541147883",
-      "name": "Sauzen"
-    }
   ],
   "products": [
-    {
-      "id": "1777544220.980168",
-      "name": "Ketchup",
-      "quantity": 1,
-      "categoryId": "custom_1777541147883",
-      "expiryDate": "2026-05-07",
-      "addedAt": "2026-04-30"
-    }
   ],
   "fridgeZones": {
     "deur": [
