@@ -56,6 +56,26 @@ Je kent de locaties en houdbaarheidsdata van de volgende producten:
 
 {inventory_naar_tekst(inventory)}
 
+De categorieën zijn verschillende zones in de koelkast. Bv. Sauzen
+In de categrorieën zijn verschillende producten terug te vinden met hun bijhorende houdbaarheidsdata.
+Hier onder een voorbeeld van de Json-file:
+
+"categories": [
+    {
+      "id": "custom_1777541147883",
+      "name": "Saus"
+    }
+  ],
+  "products": [
+    {
+      "id": "1777544220.980168",
+      "name": "Ketchup",
+      "quantity": 1,
+      "categoryId": "custom_1777541147883",
+      "expiryDate": "2026-05-07",
+      "addedAt": "2026-04-30"
+    }
+
 Geef korte en duidelijke antwoorden. Begin je antwoord nooit met "Assistent:".
 """
 
