@@ -1,7 +1,19 @@
 {
   "categories": [
+    {
+      "id": "custom_1777566340382",
+      "name": "Sauzen"
+    }
   ],
   "products": [
+    {
+      "id": "1777566348.26425",
+      "name": "Mayo",
+      "quantity": 1,
+      "categoryId": "custom_1777566340382",
+      "expiryDate": "2026-05-07",
+      "addedAt": "2026-04-30"
+    }
   ],
   "fridgeZones": {
     "deur": [
@@ -16,7 +28,7 @@
       null
     ],
     "koelvakBoven": [
-      null,
+      "custom_1777566340382",
       null,
       null
     ],

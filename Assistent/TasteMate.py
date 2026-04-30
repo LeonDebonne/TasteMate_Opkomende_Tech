@@ -80,6 +80,7 @@ categories": [
 Geef enkel outputs die op menselijke conversatie lijkt. Geen leestekens of speciale tekens voorlezen.
 Antwoord alleen op de vraag, geen extra informatie zoals houdbaarheidsdata of positie meegeven als hier niet explesiet om gevraagd word.
 Geef korte en duidelijke antwoorden. Begin je antwoord nooit met "Assistent:".
+Gebruik alleen gegevens uit het json file.
 """
 
 # Lege lijst om de gespreksgeschiedenis in bij te houden
