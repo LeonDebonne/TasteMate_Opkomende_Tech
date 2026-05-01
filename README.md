@@ -14,16 +14,16 @@ Voor het valideren van de aansluiting is gebruik gemaakt van de [datasheet](/dat
 <p align="center"> 
 <img src="/img/Schema_Afstandssensor.png" width="50%">
 
-De[code](/inputs/afstandssensor.py) maakt gebruik van de gpiozero library en de time library.
+De [code](/inputs/afstandssensor.py) maakt gebruik van de gpiozero library en de time library.
 
 ## Validatie outputs
 ### Buzzer
-De buzzer maakt een kort geluid om gebruikers te vertellen dat het scherm aanstaat. Voor het valideren van de aansluiting is gebruik gemaakt van de [datasheet](/datasheets/Buzzer.pdf). De opstelling bevat een Raspberry pi, de buzzer en twee jumpers.
+De buzzer maakt een kort geluid om gebruikers te vertellen dat het scherm aan staat. Voor het valideren van de aansluiting is gebruik gemaakt van de [datasheet](/datasheets/Buzzer.pdf). De opstelling bevat een Raspberry pi, de buzzer en twee jumpers.
 
 <p align="center"> 
 <img src="/img/Schema_Buzzer.png" width="50%">
 
-De[code](/outputs/buzzer.py) maakt gebruik van de gpiozero library en de time library.
+De [code](/outputs/buzzer.py) maakt gebruik van de gpiozero library en de time library.
 
 ### Scherm
 Het scherm toont de interface en kan gebruikt worden via touchscreen. Er wordt gebruik gemaakt van een 4.3 inch HDMI LCD. 
