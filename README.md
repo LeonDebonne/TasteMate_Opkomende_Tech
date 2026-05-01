@@ -28,7 +28,7 @@ De [code](/outputs/buzzer.py) maakt gebruik van de gpiozero library en de time l
 ### Scherm
 Het scherm toont de interface en kan gebruikt worden via touchscreen. Er wordt gebruik gemaakt van een 4.3 inch HDMI LCD. 
 De opstelling bevat een Raspberry pi, het scherm en een HDMI-kabel. De connectie gebeurt dus via de HDMI-kabel.
-De[code](/outputs/scherm.py) maakt gebruik van de tkinter library.
+De [code](/outputs/scherm.py) maakt gebruik van de tkinter library.
 
 ### Test 1 Schema
 Voor dit onderdeel is het de bedoeling om met Arduino een systeem te maken dat detecteert wanneer er een persoon voor de koelkast staat. Vervolgens moet het scherm aangaan en krijgt de gebruiker een audiotrigger om te laten weten dat het scherm is ingeschakeld.
