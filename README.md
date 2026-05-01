@@ -5,6 +5,31 @@ De TasteMate is een product dat het gebruik van de koelkast voor visueel beperkt
 Het eerste onderdeel wordt geactiveerd via een wake-upmechanisme. Dit maakt gebruik van een afstandssensor die, wanneer er een persoon voor de koelkast of TastMate staat, een signaal stuurt naar het touchscreen om in te schakelen. De interface wordt hierbij lokaal gehost en is ontworpen met FigmaMake.
 
 Het tweede onderdeel werkt via een microfoon die luistert naar de vraag van de blinde of slechtziende persoon. Via een AI-assistent, die gekoppeld is aan Gemini, wordt deze vraag beantwoord met informatie uit de interface. Dit antwoord wordt vervolgens via een luidspreker gecommuniceerd naar de gebruiker.
+
+## Validatie inputs
+### Afstandssensor
+De afstandssensor wordt in het project gebruikt om te detecteren ofdat er een persoon voor de koelkast staat. Deze meet de afstand tot een bepaald object.
+Voor het valideren van de aansluiting is gebruik gemaakt van de [datasheet](/datasheets/HCSR04.pdf). De opstelling bevat een Raspberry pi, de sensor en vier jumpers.
+
+<p align="center"> 
+<img src="/img/Schema_Afstandssensor.png" width="50%">
+
+De[code](/inputs/afstandssensor.py) maakt gebruik van de gpiozero library en de time library.
+
+## Validatie outputs
+### Buzzer
+De buzzer maakt een kort geluid om gebruikers te vertellen dat het scherm aanstaat. Voor het valideren van de aansluiting is gebruik gemaakt van de [datasheet](/datasheets/Buzzer.pdf). De opstelling bevat een Raspberry pi, de buzzer en twee jumpers.
+
+<p align="center"> 
+<img src="/img/Schema_Buzzer.png" width="50%">
+
+De[code](/outputs/buzzer.py) maakt gebruik van de gpiozero library en de time library.
+
+### Scherm
+Het scherm toont de interface en kan gebruikt worden via touchscreen. Er wordt gebruik gemaakt van een 4.3 inch HDMI LCD. 
+De opstelling bevat een Raspberry pi, het scherm en een HDMI-kabel. De connectie gebeurt dus via de HDMI-kabel.
+De[code](/outputs/scherm.py) maakt gebruik van de tkinter library.
+
 ### Test 1 Schema
 Voor dit onderdeel is het de bedoeling om met Arduino een systeem te maken dat detecteert wanneer er een persoon voor de koelkast staat. Vervolgens moet het scherm aangaan en krijgt de gebruiker een audiotrigger om te laten weten dat het scherm is ingeschakeld.
 
