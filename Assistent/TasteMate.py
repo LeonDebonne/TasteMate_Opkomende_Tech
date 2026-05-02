@@ -17,59 +17,29 @@ r = sr.Recognizer()
 # Audiospeler opstarten
 pygame.mixer.init()
 
-# Inventory inlezen vanuit JSON
+# Pad naar inventory bestand
 base_dir = os.path.dirname(os.path.abspath(__file__))
 inventory_path = os.path.join(base_dir, "..", "webserver", "inventory.json")
-
-with open(inventory_path, "r", encoding="utf-8") as f:
-    inventory = json.load(f)
 
 
 # Inventory omzetten naar leesbare tekst voor de context
 def inventory_naar_tekst(inventory):
     regels = []
-    zone_namen = inventory.get("zoneNames", {})
     categories = {}
     for c in inventory.get("categories", []):
         categories[c["id"]] = c["name"]
 
-    for zone_id, producten in inventory["fridgeZones"].items():
-        zone_naam = zone_namen.get(zone_id, zone_id)
-        for product in producten:
-            if product is None:
-                continue
-            if isinstance(product, str):
-                naam = categories.get(product, product)
-                regel = f"- {naam}: {zone_naam}"
-            else:
-                regel = f"- {product['naam']}: {zone_naam}, houdbaar tot {product.get('houdbaarheidsdatum', 'onbekend')}"
-            regels.append(regel)
+    for product in inventory.get("products", []):
+        categorie = categories.get(product.get("categoryId", ""), "Onbekend")
+        naam = product.get("name", "Onbekend")
+        houdbaar = product.get("expiryDate", "onbekend")
+        regels.append(f"- {naam} (categorie: {categorie}, houdbaar tot: {houdbaar})")
 
     if not regels:
         return "De koelkast is momenteel leeg."
 
     return "\n".join(regels)
 
-
-# Instructies voor Gemini: wie hij is en welke producten hij kent
-context = f"""
-Je bent een koelkastassistent. Je helpt de gebruiker met het bijhouden van voedsel in de koelkast.
-Je kent de locaties en houdbaarheidsdata van de producten in die hier in uitgeschreven worden:
-
-Nu krijg je hier onder een lijst ( oorspronkelijk json) 
-De categorieën zijn verschillende zones in de koelkast. Bv. Sauzen
-In de categrorieën zijn verschillende producten terug te vinden met hun bijhorende houdbaarheidsdata.
-Hier onder een voorbeeld van de Json-file:
-- categories zijn de onderverdelingen per koelruimte. Bv. Ijsjes in vriezer
-- products zijn de producten die in de categorieën te vinden zijn. Bv. Cornetto in Ijsjes
-
-{inventory_naar_tekst(inventory)}
-
-Geef enkel outputs die op menselijke conversatie lijkt. Geen leestekens of speciale tekens voorlezen.
-Antwoord alleen op de vraag, geen extra informatie zoals houdbaarheidsdata of positie meegeven als hier niet expleciet om gevraagd word.
-Geef korte en duidelijke antwoorden. Begin je antwoord nooit met "Assistent:".
-Gebruik alleen gegevens uit de json file.
-"""
 
 # Lege lijst om de gespreksgeschiedenis in bij te houden
 geschiedenis = []
@@ -136,8 +106,26 @@ async def main():
                 if len(geschiedenis) > 4:
                     geschiedenis.pop(0)
 
+                # Inventory opnieuw inlezen zodat wijzigingen via de interface zichtbaar zijn
+                with open(inventory_path, "r", encoding="utf-8") as f:
+                    inventory = json.load(f)
+
+                # Context opnieuw opbouwen met actuele inventory
+                actuele_context = f"""
+Je bent een koelkastassistent. Je helpt de gebruiker met het bijhouden van voedsel in de koelkast.
+De categorieën zijn verschillende onderverdelingen in de koelkast. Bv. Sauzen
+In de categorieën zijn verschillende producten terug te vinden met hun bijhorende houdbaarheidsdata.
+
+{inventory_naar_tekst(inventory)}
+
+Geef enkel outputs die op menselijke conversatie lijkt. Geen leestekens of speciale tekens voorlezen.
+Antwoord alleen op de vraag, geen extra informatie zoals houdbaarheidsdata of positie meegeven als hier niet expliciet om gevraagd word.
+Geef korte en duidelijke antwoorden. Begin je antwoord nooit met "Assistent:".
+Gebruik alleen gegevens uit de bovenstaande lijst.
+"""
+
                 # Volledig gesprek opbouwen om naar Gemini te sturen
-                berichten = context + "\n\n"
+                berichten = actuele_context + "\n\n"
                 for bericht in geschiedenis:
                     if bericht["role"] == "user":
                         berichten += f"Gebruiker: {bericht['content']}\n"

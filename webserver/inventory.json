@@ -1,10 +1,6 @@
 {
   "categories": [
     {
-      "id": "custom_1777566340382",
-      "name": "Sauzen"
-    },
-    {
       "id": "custom_1777730880153",
       "name": "Ijsjes"
     },
@@ -14,14 +10,6 @@
     }
   ],
   "products": [
-    {
-      "id": "1777566348.26425",
-      "name": "Mayo",
-      "quantity": 1,
-      "categoryId": "custom_1777566340382",
-      "expiryDate": "2026-05-07",
-      "addedAt": "2026-04-30"
-    },
     {
       "id": "1777730905.260118",
       "name": "Hesp",
@@ -35,6 +23,30 @@
       "name": "Magnum",
       "quantity": 1,
       "categoryId": "custom_1777730880153",
+      "expiryDate": "2026-05-09",
+      "addedAt": "2026-05-02"
+    },
+    {
+      "id": "1777732076.291711",
+      "name": "Kaas",
+      "quantity": 1,
+      "categoryId": "custom_1777730895779",
+      "expiryDate": "2026-05-09",
+      "addedAt": "2026-05-02"
+    },
+    {
+      "id": "1777732172.978835",
+      "name": "Worst",
+      "quantity": 1,
+      "categoryId": "custom_1777730895779",
+      "expiryDate": "2026-05-09",
+      "addedAt": "2026-05-02"
+    },
+    {
+      "id": "1777732439.520202",
+      "name": "Gehakt",
+      "quantity": 1,
+      "categoryId": "custom_1777730895779",
       "expiryDate": "2026-05-09",
       "addedAt": "2026-05-02"
     }
