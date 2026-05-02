@@ -41,7 +41,7 @@ def turn_screen_on():
         ["wlr-randr", "--output", "HDMI-A-1", "--transform", "90"],
         stdout=subprocess.DEVNULL,
         stderr=subprocess.DEVNULL
-    )
+    ) # schrem draaien
 
 
 def turn_screen_off():

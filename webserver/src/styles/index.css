@@ -2,12 +2,26 @@
 @import './tailwind.css';
 @import './theme.css';
 
+/* Basis fullscreen layout */
+html, body, #root {
+  margin: 0;
+  padding: 0;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+}
+
+* {
+  box-sizing: border-box;
+}
+
 /* Virtual Keyboard Styling - iPhone AZERTY Style */
 .simple-keyboard {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   background: #d1d5db;
   padding: 6px 4px 8px 4px;
   border-radius: 16px 16px 0 0;
+  width: 100%;
 }
 
 .simple-keyboard .hg-row {
@@ -21,23 +35,21 @@
 }
 
 .simple-keyboard .hg-button {
-  height: 42px;
+  height: 6vh; /* 👈 responsive ipv vaste px */
   background: #ffffff;
   border: none;
   border-radius: 5px;
-  font-size: 20px;
+  font-size: 2.2vh; /* 👈 schaalt met scherm */
   font-weight: 400;
   color: #000;
   box-shadow: 0 1px 0 rgba(0, 0, 0, 0.15);
   transition: all 0.05s ease;
   margin: 0 2px;
-  min-width: 28px;
   flex: 1;
   display: flex;
   align-items: center;
   justify-content: center;
   text-transform: lowercase;
-  max-width: 36px;
 }
 
 .simple-keyboard .hg-button:active {
@@ -46,112 +58,35 @@
   box-shadow: 0 0 0 rgba(0, 0, 0, 0.15);
 }
 
-/* Enter/Return button (vinkje) */
-.simple-keyboard .keyboard-button-action,
+/* Enter knop */
 .simple-keyboard .hg-button-enter {
   background: #3b82f6;
   color: white;
   font-weight: 700;
-  font-size: 32px;
-  line-height: 1;
+  font-size: 3vh;
   flex: 1.8;
-  max-width: 75px;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Apple Color Emoji', 'Segoe UI Emoji', sans-serif;
 }
 
-.simple-keyboard .keyboard-button-action:active,
-.simple-keyboard .hg-button-enter:active {
-  background: #2563eb;
-  transform: scale(0.95);
-}
-
-/* Shift, 123, ABC buttons */
-.simple-keyboard .keyboard-button-special,
+/* Special keys */
 .simple-keyboard .hg-button-shift,
 .simple-keyboard .hg-button-numbers,
 .simple-keyboard .hg-button-abc {
   background: #aeb5bd;
-  color: #000;
-  font-size: 15px;
-  font-weight: 500;
-  flex: 1.3;
-  max-width: 52px;
+  font-size: 1.8vh;
 }
 
-.simple-keyboard .keyboard-button-special:active,
-.simple-keyboard .hg-button-shift:active,
-.simple-keyboard .hg-button-numbers:active,
-.simple-keyboard .hg-button-abc:active {
-  background: #8d949c;
-}
-
-/* Backspace button */
-.simple-keyboard .keyboard-button-bksp,
+/* Backspace */
 .simple-keyboard .hg-button-bksp {
   background: #aeb5bd;
-  color: #000;
-  font-size: 20px;
-  flex: 1.3;
-  max-width: 52px;
-}
-
-.simple-keyboard .keyboard-button-bksp:active,
-.simple-keyboard .hg-button-bksp:active {
-  background: #8d949c;
 }
 
 /* Space bar */
-.simple-keyboard .keyboard-button-space,
 .simple-keyboard .hg-button-space {
-  background: #ffffff;
   flex: 5;
-  max-width: none;
-  min-width: 200px;
 }
 
-.simple-keyboard .keyboard-button-space:active,
-.simple-keyboard .hg-button-space:active {
-  background: #d0d0d0;
-}
-
-/* Comma and period on last row */
-.simple-keyboard .hg-row:last-child .hg-button:not(.hg-button-space):not(.hg-button-enter):not(.hg-button-numbers):not(.hg-button-abc) {
-  flex: 0.8;
-  max-width: 38px;
-}
-
-/* Input Preview Animation */
+/* Animatie */
 @keyframes blink {
-  0%, 50% {
-    opacity: 1;
-  }
-  51%, 100% {
-    opacity: 0;
-  }
-}
-html, body {
-  margin: 0;
-  padding: 0;
-  overflow: hidden;
-  width: 100vw;
-  height: 100vh;
-}
-
-#root {
-  position: fixed;
-  width: 100vw;
-  height: 100vh;
-  overflow: hidden;
-}
-
-/* Alles in je app draaien */
-#root > * {
-  position: absolute;
-  width: 100vh;
-  height: 100vw;
-  top: 0;
-  left: 100vw;
-  transform: rotate(90deg);
-  transform-origin: top left;
-  overflow: hidden;
+  0%, 50% { opacity: 1; }
+  51%, 100% { opacity: 0; }
 }
