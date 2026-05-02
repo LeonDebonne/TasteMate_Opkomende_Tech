@@ -10,9 +10,8 @@ ECHO_PIN = 24
 BUZZER_PIN = 18
 
 DETECT_DISTANCE = 0.5 # detectieafstand in meter
-SCREEN_ON_TIME = 10 # scherm blijft 10 seconden aan na detectie
+SCREEN_ON_TIME = 10 # scherm blijft aan zolang er binnen 10s activiteit is
 WAIT_NO_DETECTION = 30 # wachttijd als er niemand gedetecteerd wordt
-WAIT_AFTER_INPUT = 30 # wachttijd na interactie
 LOOP_DELAY = 0.2  # korte pauze voor CPU ontlasting
 
 sensor = DistanceSensor(
@@ -37,11 +36,12 @@ def turn_screen_on():
 
     screen_is_on = True
     beep_once() # buzzer piept elke keer als scherm aangaat
+
     subprocess.run(
         ["wlr-randr", "--output", "HDMI-A-1", "--transform", "90"],
         stdout=subprocess.DEVNULL,
         stderr=subprocess.DEVNULL
-    ) # schrem draaien
+    ) # scherm draaien
 
 
 def turn_screen_off():
@@ -54,7 +54,6 @@ def turn_screen_off():
     ) # uitzetten scherm
 
     screen_is_on = False
-
 
 
 def beep_once():
@@ -83,24 +82,28 @@ try:
             if not screen_is_on: # scherm aanzetten en buzzer activeren bij eerste detectie
                 turn_screen_on()
 
-            print("Scherm aan voor 10 seconden")
-            time.sleep(SCREEN_ON_TIME) # scherm blijft minimaal 10 seconden aan
-
             last_mouse_position = pyautogui.position() # startpositie muis opslaan
+            last_activity_time = time.monotonic() # timer starten
 
-            while screen_is_on: # zolang scherm aan staat blijven we interactie checken
+            while screen_is_on: # zolang scherm aan staat blijven we detectie en interactie checken
+                now = time.monotonic()
+
+                if is_person_detected(): # persoon blijft aanwezig
+                    last_activity_time = now # timer resetten
+
                 interaction_detected, current_mouse_position = is_interaction_detected(last_mouse_position)
 
                 if interaction_detected: # als er interactie is
-
+                    last_activity_time = now # timer resetten
                     last_mouse_position = current_mouse_position # muispositie updaten
 
-                    time.sleep(WAIT_AFTER_INPUT) # wachten na interactie
-
-                else: # geen interactie meer
+                if now - last_activity_time >= SCREEN_ON_TIME: # 10 seconden geen activiteit
                     turn_screen_off() # scherm uitzetten
 
+                time.sleep(LOOP_DELAY)
+
         else: # geen persoon gedetecteerd
+            print("Niemand gedetecteerd, wachten 30 seconden")
             time.sleep(WAIT_NO_DETECTION) # wachten voor volgende scan
 
         time.sleep(LOOP_DELAY) # korte pauze om CPU te ontlasten
