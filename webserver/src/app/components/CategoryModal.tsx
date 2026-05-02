@@ -262,7 +262,7 @@ export function CategoryModal({
               <p>Geen producten in deze categorie</p>
             </div>
           ) : (
-            <div className="grid grid-cols-3 gap-6 p-4">
+            <div className="grid grid-cols-1 gap-4 p-4">
               {items.map((item) => {
                 const ProductIcon = getProductIcon(item.name);
                 const isRemoving = removingItemId === item.id;

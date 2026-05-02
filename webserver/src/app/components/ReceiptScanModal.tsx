@@ -485,7 +485,7 @@ export function ReceiptScanModal({ isOpen, onClose, onProductsDetected }: Receip
         <div className="mt-4 space-y-4">
           {!isProcessing && detectedProducts.length === 0 && !showTextInput && (
             <>
-              <div className="grid grid-cols-3 gap-3">
+              <div className="grid grid-cols-1 gap-4">
                 <Button
                   onClick={() => cameraInputRef.current?.click()}
                   variant="outline"
