@@ -65,6 +65,8 @@ De voice-assistent is het gedeelte van TasteMate dat speciaal ontworpen is voor 
 Wanneer de assistent opgestart is, luistert een microfoon continu naar de gebruiker. Zodra er iets gezegd wordt, wordt de spraak omgezet naar tekst via Google. Die tekst wordt vervolgens doorgestuurd naar een AI, namelijk Google Gemini, die de vraag begrijpt en een passend antwoord formuleert.
 Het antwoord van de AI wordt daarna omgezet naar spraak via Microsoft Edge TTS, een tekst-naar-spraak dienst die een natuurlijke Nederlandse stem gebruikt. Dit gesproken antwoord wordt vervolgens afgespeeld via de luidspreker, zodat de gebruiker het antwoord duidelijk kan horen.
 
+<img src="/img/Interface.png" width="100%">
+
 ### Wat weet de assistent?
 De assistent heeft toegang tot de volledige inhoud van de koelkast. Die inhoud wordt bijgehouden in een bestand dat automatisch bijgewerkt wordt telkens wanneer er iets verandert via de interface. Denk aan producten die toegevoegd of verwijderd worden, of houdbaarheidsdata die aangepast wordt. Bij elke vraag leest de assistent dit bestand opnieuw in, zodat hij altijd werkt met de meest actuele informatie.
 Naast de inhoud van de koelkast onthoudt de assistent ook de laatste paar vragen en antwoorden uit het gesprek. Zo kan hij de context van een gesprek begrijpen en logisch verder praten, zonder dat de gebruiker alles telkens opnieuw moet uitleggen.
