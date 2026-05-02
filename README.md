@@ -46,3 +46,15 @@ Het resultaat is quick en dirty gerealiseerd om zo weinig tijd te verliezen aan 
 Hier onder is het Wokwi schema te vinden van het arduino project. De code is te vinden onder [Arduino_Code](src/Arduino_Code).
 
 <img src="/img/Schema_Wakeup.jpg" width="100%">
+
+## Interface
+
+Op het scherm dat aan gaat door het wake-up mechanisme wordt de interface getoond. Dit houdt de invenstaris van de koelkast bij. Daarin zitten gegevens zoals de houdbaarheidsdatum, het aantal en de locatie van producten. 
+
+De applicatie maakt gebruik van 2 lokaal gehoste servers op de Raspberry pi. De interface is een lokale webserver die automatisch wordt weergegeven in kioskmodus op chromium. Dit is de browser op de Raspberry pi. Dit is een eenvoudige HTTP server op poort 5173. De logica en communicatie met de AI-assistent gebeurt via een Python backend server. Deze houdt de inventarisgegevens bij, die worden opgeslagen in een JSON-bestand die kan worden geraadpleegd door de AI.
+
+De interface zelf is ontworpen via FigmaMake. Alle code rondom het design en de werking van de interface zijn dus hieruit gekopieerd met hier en daar enkele tweaks met AI. De Python backend server en de JSON inventaris zijn achteraf met behulp van AI geschreven.
+
+<img src="/img/Interface.png" width="100%">
+
+## Voice-assistent
