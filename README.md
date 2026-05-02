@@ -58,3 +58,20 @@ De interface zelf is ontworpen via FigmaMake. Alle code rondom het design en de 
 <img src="/img/Interface.png" width="100%">
 
 ## Voice-assistent
+
+Dit onderdeel bevat de Python-code voor een spraakgestuurde AI-assistent die de inhoud van de koelkast beheert en bevraagbaar maakt. De gebruiker kan via microfoon vragen stellen, waarop de assistent een gesproken antwoord teruggeeft.
+
+De applicatie maakt gebruik van spraakherkenning om gesproken input om te zetten naar tekst. Deze tekst wordt samen met de huidige inventaris (uit een JSON-bestand) doorgestuurd naar Google Gemini. De AI genereert vervolgens een kort en natuurlijk antwoord op basis van de beschikbare producten in de koelkast.
+
+Voor de output wordt gebruikgemaakt van tekst-naar-spraak via Microsoft Edge TTS, zodat het antwoord hoorbaar wordt afgespeeld. De audio wordt lokaal afgespeeld met behulp van pygame.
+
+De inventaris bevat informatie zoals producten, categorieën en houdbaarheidsdata, en wordt dynamisch omgezet naar context voor de AI. Daarnaast wordt een korte gespreksgeschiedenis bijgehouden zodat de assistent contextueel kan reageren.
+
+De code maakt gebruik van verschillende libraries, waaronder:
+
+speech_recognition voor spraakinput
+edge_tts voor spraakoutput
+pygame voor audio playback
+json en os voor het beheren van de inventaris
+
+Dit systeem vormt de brug tussen de gebruiker en de slimme koelkast, waarbij interactie volledig via spraak verloopt.
