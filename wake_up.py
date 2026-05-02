@@ -37,6 +37,11 @@ def turn_screen_on():
 
     screen_is_on = True
     beep_once() # buzzer piept elke keer als scherm aangaat
+    subprocess.run(
+        ["wlr-randr", "--output", "HDMI-A-1", "--transform", "90"],
+        stdout=subprocess.DEVNULL,
+        stderr=subprocess.DEVNULL
+    )
 
 
 def turn_screen_off():
@@ -49,6 +54,7 @@ def turn_screen_off():
     ) # uitzetten scherm
 
     screen_is_on = False
+
 
 
 def beep_once():
