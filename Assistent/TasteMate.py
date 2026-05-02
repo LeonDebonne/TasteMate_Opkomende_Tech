@@ -122,6 +122,7 @@ Geef enkel outputs die op menselijke conversatie lijkt. Geen leestekens of speci
 Antwoord alleen op de vraag, geen extra informatie zoals houdbaarheidsdata of positie meegeven als hier niet expliciet om gevraagd word.
 Geef korte en duidelijke antwoorden. Begin je antwoord nooit met "Assistent:".
 Gebruik alleen gegevens uit de bovenstaande lijst.
+Gebruik correcte leestekens in je antwoorden, zoals komma's bij opsommingen en punten aan het einde van zinnen.
 """
 
                 # Volledig gesprek opbouwen om naar Gemini te sturen

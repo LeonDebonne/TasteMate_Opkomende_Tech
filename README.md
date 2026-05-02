@@ -59,19 +59,33 @@ De interface zelf is ontworpen via FigmaMake. Alle code rondom het design en de 
 
 ## Voice-assistent
 
-Dit onderdeel bevat de Python-code voor een spraakgestuurde AI-assistent die de inhoud van de koelkast beheert en bevraagbaar maakt. De gebruiker kan via microfoon vragen stellen, waarop de assistent een gesproken antwoord teruggeeft.
+De voice-assistent is het gedeelte van TasteMate dat speciaal ontworpen is voor visueel beperkte gebruikers. In plaats van een scherm te gebruiken, verloopt alle communicatie via spraak. De gebruiker stelt gewoon een vraag aan de koelkast, en krijgt een gesproken antwoord terug.
 
-De applicatie maakt gebruik van spraakherkenning om gesproken input om te zetten naar tekst. Deze tekst wordt samen met de huidige inventaris (uit een JSON-bestand) doorgestuurd naar Google Gemini. De AI genereert vervolgens een kort en natuurlijk antwoord op basis van de beschikbare producten in de koelkast.
+### Hoe werkt het?
+Wanneer de assistent opgestart is, luistert een microfoon continu naar de gebruiker. Zodra er iets gezegd wordt, wordt de spraak omgezet naar tekst via Google. Die tekst wordt vervolgens doorgestuurd naar een AI, namelijk Google Gemini, die de vraag begrijpt en een passend antwoord formuleert.
+Het antwoord van de AI wordt daarna omgezet naar spraak via Microsoft Edge TTS, een tekst-naar-spraak dienst die een natuurlijke Nederlandse stem gebruikt. Dit gesproken antwoord wordt vervolgens afgespeeld via de luidspreker, zodat de gebruiker het antwoord duidelijk kan horen.
 
-Voor de output wordt gebruikgemaakt van tekst-naar-spraak via Microsoft Edge TTS, zodat het antwoord hoorbaar wordt afgespeeld. De audio wordt lokaal afgespeeld met behulp van pygame.
+### Wat weet de assistent?
+De assistent heeft toegang tot de volledige inhoud van de koelkast. Die inhoud wordt bijgehouden in een bestand dat automatisch bijgewerkt wordt telkens wanneer er iets verandert via de interface. Denk aan producten die toegevoegd of verwijderd worden, of houdbaarheidsdata die aangepast wordt. Bij elke vraag leest de assistent dit bestand opnieuw in, zodat hij altijd werkt met de meest actuele informatie.
+Naast de inhoud van de koelkast onthoudt de assistent ook de laatste paar vragen en antwoorden uit het gesprek. Zo kan hij de context van een gesprek begrijpen en logisch verder praten, zonder dat de gebruiker alles telkens opnieuw moet uitleggen.
 
-De inventaris bevat informatie zoals producten, categorieën en houdbaarheidsdata, en wordt dynamisch omgezet naar context voor de AI. Daarnaast wordt een korte gespreksgeschiedenis bijgehouden zodat de assistent contextueel kan reageren.
+### Wat kan je vragen?
+De assistent is bedoeld voor praktische vragen over de koelkast. Je kan bijvoorbeeld vragen welke producten er in de koelkast zitten, wanneer iets over datum gaat, of wat er in een bepaalde zone staat. De assistent geeft altijd een kort en natuurlijk antwoord, alsof je met een persoon praat.You said: Wat je nu hebt is perfect voeg echter toch nog in een extra stuk wat meer toelichting bij het technische zoals misschien de libraries enzoWat je nu hebt is perfect voeg echter toch nog in een extra stuk wat meer toelichting bij het technische zoals misschien de libraries enzo17:28Claude responded: Voice-assistentVoice-assistent
+De voice-assistent is het gedeelte van TasteMate dat speciaal ontworpen is voor visueel beperkte gebruikers. In plaats van een scherm te gebruiken, verloopt alle communicatie via spraak. De gebruiker stelt gewoon een vraag aan de koelkast, en krijgt een gesproken antwoord terug.
 
-De code maakt gebruik van verschillende libraries, waaronder:
+### Hoe werkt het?
+Wanneer de assistent opgestart is, luistert een microfoon continu naar de gebruiker. Zodra er iets gezegd wordt, wordt de spraak omgezet naar tekst via Google. Die tekst wordt vervolgens doorgestuurd naar een AI, namelijk Google Gemini, die de vraag begrijpt en een passend antwoord formuleert.
+Het antwoord van de AI wordt daarna omgezet naar spraak via Microsoft Edge TTS, een tekst-naar-spraak dienst die een natuurlijke Nederlandse stem gebruikt. Dit gesproken antwoord wordt vervolgens afgespeeld via de luidspreker, zodat de gebruiker het antwoord duidelijk kan horen.
 
-speech_recognition voor spraakinput
-edge_tts voor spraakoutput
-pygame voor audio playback
-json en os voor het beheren van de inventaris
+### Wat weet de assistent?
+De assistent heeft toegang tot de volledige inhoud van de koelkast. Die inhoud wordt bijgehouden in een bestand dat automatisch bijgewerkt wordt telkens wanneer er iets verandert via de interface. Denk aan producten die toegevoegd of verwijderd worden, of houdbaarheidsdata die aangepast wordt. Bij elke vraag leest de assistent dit bestand opnieuw in, zodat hij altijd werkt met de meest actuele informatie.
+Naast de inhoud van de koelkast onthoudt de assistent ook de laatste paar vragen en antwoorden uit het gesprek. Zo kan hij de context van een gesprek begrijpen en logisch verder praten, zonder dat de gebruiker alles telkens opnieuw moet uitleggen.
 
-Dit systeem vormt de brug tussen de gebruiker en de slimme koelkast, waarbij interactie volledig via spraak verloopt.
+### Wat kan je vragen?
+De assistent is bedoeld voor praktische vragen over de koelkast. Je kan bijvoorbeeld vragen welke producten er in de koelkast zitten, wanneer iets over datum gaat, of wat er in een bepaalde zone staat. De assistent geeft altijd een kort en natuurlijk antwoord, alsof je met een persoon praat.
+
+### Technische opbouw
+De assistent is geschreven in Python en maakt gebruik van een aantal externe libraries, dit zijn kant-en-klare stukken code die een specifieke taak uitvoeren zodat die niet zelf geschreven moet worden.
+Voor de spraakherkenning wordt SpeechRecognition gebruikt. Dit is een library die de microfooninput opvangt en doorstuurt naar Google om om te zetten naar tekst. Voor de spraakuitvoer wordt Edge TTS van Microsoft gebruikt, die de tekst van de AI omzet naar een natuurlijk klinkende Nederlandse stem. Het afspelen van die stem gebeurt via Pygame, een library die oorspronkelijk bedoeld is voor het maken van spelletjes, maar ook uitstekend werkt voor het afspelen van audio.
+De communicatie met Google Gemini verloopt via de officiële Gemini Python library van Google. Die stuurt de vraag van de gebruiker, samen met de inhoud van de koelkast, naar de AI en ontvangt het antwoord terug. De inventarisdata zelf wordt opgeslagen in een JSON-bestand, een eenvoudig tekstformaat dat makkelijk leesbaar is voor zowel mensen als computers. De libraries json en os zorgen ervoor dat dit bestand correct ingelezen en verwerkt wordt.
+Tot slot wordt alles asynchroon uitgevoerd via asyncio, wat betekent dat de assistent meerdere taken tegelijk kan afhandelen, zoals luisteren, verwerken en afspelen, zonder dat die elkaar in de weg zitten.
