@@ -78,9 +78,9 @@ categories": [
       "addedAt": "2026-04-30"
     }}
 Geef enkel outputs die op menselijke conversatie lijkt. Geen leestekens of speciale tekens voorlezen.
-Antwoord alleen op de vraag, geen extra informatie zoals houdbaarheidsdata of positie meegeven als hier niet explesiet om gevraagd word.
+Antwoord alleen op de vraag, geen extra informatie zoals houdbaarheidsdata of positie meegeven als hier niet expleciet om gevraagd word.
 Geef korte en duidelijke antwoorden. Begin je antwoord nooit met "Assistent:".
-Gebruik alleen gegevens uit het json file.
+Gebruik alleen gegevens uit de json file.
 """
 
 # Lege lijst om de gespreksgeschiedenis in bij te houden
@@ -117,65 +117,72 @@ async def main():
         r.adjust_for_ambient_noise(mic, duration=0.5)
         print("Klaar! Stel je vraag.")
 
-        # Blijf herhalen totdat er gestopt wordt
-        while True:
-            try:
-                # Luisteren naar microfoon, stopt na 60 seconden stilte
-                audio = r.listen(mic, timeout=60)
+        try:
+            # Blijf herhalen totdat er gestopt wordt
+            while True:
+                try:
+                    # Luisteren naar microfoon, stopt na 60 seconden stilte
+                    audio = r.listen(mic, timeout=60)
 
-                # Audio naar Google sturen en tekst terugkrijgen in het Nederlands
-                spoken = r.recognize_google(audio, language="nl-NL")
-                print(f"Jij: {spoken}")
+                    # Audio naar Google sturen en tekst terugkrijgen in het Nederlands
+                    spoken = r.recognize_google(audio, language="nl-NL")
+                    print(f"Jij: {spoken}")
 
-            except sr.WaitTimeoutError:
-                # 60 seconden geen spraak -> afsluiten
-                print("Geen spraak gedetecteerd, assistent sluit af.")
-                break
-            except sr.UnknownValueError:
-                # Spraak niet verstaan -> opnieuw proberen
-                print("Niet verstaan, probeer opnieuw.")
-                continue
-            except sr.RequestError:
-                # Geen internetverbinding -> opnieuw proberen
-                print("Geen verbinding.")
-                continue
+                except sr.WaitTimeoutError:
+                    # 60 seconden geen spraak -> afsluiten
+                    print("Geen spraak gedetecteerd, assistent sluit af.")
+                    break
+                except sr.UnknownValueError:
+                    # Spraak niet verstaan -> opnieuw proberen
+                    print("Niet verstaan, probeer opnieuw.")
+                    continue
+                except sr.RequestError:
+                    # Geen internetverbinding -> opnieuw proberen
+                    print("Geen verbinding.")
+                    continue
 
-            # Vraag toevoegen aan geschiedenis
-            geschiedenis.append({"role": "user", "content": spoken})
+                # Vraag toevoegen aan geschiedenis
+                geschiedenis.append({"role": "user", "content": spoken})
 
-            # Maximaal 4 berichten onthouden, oudste verwijderen
-            if len(geschiedenis) > 4:
-                geschiedenis.pop(0)
+                # Maximaal 4 berichten onthouden, oudste verwijderen
+                if len(geschiedenis) > 4:
+                    geschiedenis.pop(0)
 
-            # Volledig gesprek opbouwen om naar Gemini te sturen
-            berichten = context + "\n\n"
-            for bericht in geschiedenis:
-                if bericht["role"] == "user":
-                    berichten += f"Gebruiker: {bericht['content']}\n"
-                else:
-                    berichten += f"Assistent: {bericht['content']}\n"
+                # Volledig gesprek opbouwen om naar Gemini te sturen
+                berichten = context + "\n\n"
+                for bericht in geschiedenis:
+                    if bericht["role"] == "user":
+                        berichten += f"Gebruiker: {bericht['content']}\n"
+                    else:
+                        berichten += f"Assistent: {bericht['content']}\n"
 
-            # Gesprek naar Gemini sturen en antwoord ontvangen
-            try:
-                resp = client.models.generate_content(
-                    model="gemini-2.5-flash", contents=berichten
-                )
-                # Antwoord ophalen en "Assistent:" verwijderen als Gemini dat toevoegt
-                reply = resp.text.strip()
-                reply = reply.removeprefix("Assistent:").strip()
-            except Exception as e:
-                print(f"Gemini fout: {e}")
-                await speak("Gemini is momenteel overbelast, probeer het opnieuw.")
-                continue
+                # Gesprek naar Gemini sturen en antwoord ontvangen
+                try:
+                    resp = client.models.generate_content(
+                        model="gemini-2.5-flash", contents=berichten
+                    )
+                    # Antwoord ophalen en "Assistent:" verwijderen als Gemini dat toevoegt
+                    reply = resp.text.strip()
+                    reply = reply.removeprefix("Assistent:").strip()
+                except Exception as e:
+                    print(f"Gemini fout: {e}")
+                    await speak("Gemini is momenteel overbelast, probeer het opnieuw.")
+                    continue
 
-            print(f"Assistent: {reply}")
+                print(f"Assistent: {reply}")
 
-            # Antwoord toevoegen aan geschiedenis
-            geschiedenis.append({"role": "assistant", "content": reply})
+                # Antwoord toevoegen aan geschiedenis
+                geschiedenis.append({"role": "assistant", "content": reply})
 
-            # Antwoord uitspreken
-            await speak(reply)
-            print("Stel je volgende vraag.")
+                # Antwoord uitspreken
+                await speak(reply)
+                print("Stel je volgende vraag.")
+
+        except KeyboardInterrupt:
+            # Ctrl+C opvangen en netjes afsluiten
+            print("\nAssistent afgesloten via Ctrl+C. Tot ziens!")
+            pygame.mixer.music.stop()
+            pygame.mixer.quit()
 
 
 # Programma starten

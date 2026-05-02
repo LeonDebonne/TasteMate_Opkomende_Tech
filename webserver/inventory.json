@@ -3,6 +3,14 @@
     {
       "id": "custom_1777566340382",
       "name": "Sauzen"
+    },
+    {
+      "id": "custom_1777730880153",
+      "name": "Ijsjes"
+    },
+    {
+      "id": "custom_1777730895779",
+      "name": "Vlees"
     }
   ],
   "products": [
@@ -13,20 +21,27 @@
       "categoryId": "custom_1777566340382",
       "expiryDate": "2026-05-07",
       "addedAt": "2026-04-30"
+    },
+    {
+      "id": "1777730905.260118",
+      "name": "Hesp",
+      "quantity": 1,
+      "categoryId": "custom_1777730895779",
+      "expiryDate": "2026-05-09",
+      "addedAt": "2026-05-02"
+    },
+    {
+      "id": "1777730916.688907",
+      "name": "Magnum",
+      "quantity": 1,
+      "categoryId": "custom_1777730880153",
+      "expiryDate": "2026-05-09",
+      "addedAt": "2026-05-02"
     }
   ],
   "fridgeZones": {
-    "vriezer": [
+    "deur": [
       null,
-      null,
-      null
-    ],
-    "koelvakBoven": [
-      null,
-      null,
-      null
-    ],
-    "koelvakOnder": [
       null,
       null,
       null
@@ -36,9 +51,18 @@
       null,
       null
     ],
-    "deur": [
+    "koelvakBoven": [
+      "custom_1777730895779",
+      null,
+      null
+    ],
+    "koelvakOnder": [
       null,
       null,
+      null
+    ],
+    "vriezer": [
+      "custom_1777730880153",
       null,
       null
     ]
@@ -51,19 +75,17 @@
     "deur"
   ],
   "zoneTypes": {
-    "vriezer": "kast",
+    "deur": "deur",
+    "groentelade": "kast",
     "koelvakBoven": "kast",
     "koelvakOnder": "kast",
-    "groentelade": "kast",
-    "deur": "deur"
+    "vriezer": "kast"
   },
   "zoneNames": {
-    "vriezer": "Vriezer",
+    "deur": "Deur",
+    "groentelade": "Groentelade",
     "koelvakBoven": "Koelvak Boven",
     "koelvakOnder": "Koelvak Onder",
-    "groentelade": "Groentelade",
-    "deur": "Deur"
-  }
-} "Vriezer"
+    "vriezer": "Vriezer"
   }
 }
