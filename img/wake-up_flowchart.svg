@@ -1,0 +1,165 @@
+<svg width="100%" viewBox="0 0 680 1180" role="img" xmlns="http://www.w3.org/2000/svg">
+  <title>Flowchart schermbeheer</title>
+  <desc>Stroomdiagram van het schermbeheer programma op basis van afstandssensor en muisinteractie</desc>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </marker>
+    <mask id="gap-mask" maskUnits="userSpaceOnUse">
+      <rect x="0" y="0" width="680" height="1180" fill="white"/>
+      <!-- gaps voor de teruglooplijn rechts -->
+      <rect x="595" y="238" width="80" height="20" fill="black" rx="2"/>
+      <rect x="595" y="418" width="80" height="20" fill="black" rx="2"/>
+      <rect x="595" y="598" width="80" height="20" fill="black" rx="2"/>
+      <rect x="595" y="750" width="80" height="20" fill="black" rx="2"/>
+      <!-- gap voor de teruglooplijn links -->
+      <rect x="18" y="418" width="72" height="20" fill="black" rx="2"/>
+      <rect x="18" y="598" width="72" height="20" fill="black" rx="2"/>
+    </mask>
+  </defs>
+
+  <!-- ═══════════════════ START ═══════════════════ -->
+  <g>
+    <rect x="230" y="30" width="220" height="44" rx="22" fill="rgb(68,68,65)" stroke="rgb(180,178,169)" stroke-width="0.5"/>
+    <text x="340" y="52" text-anchor="middle" dominant-baseline="central" fill="rgb(211,209,199)" font-family="'Anthropic Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="14" font-weight="500">Programma opstarten</text>
+  </g>
+
+  <!-- Pijl 1 -->
+  <line x1="340" y1="74" x2="340" y2="114" stroke="rgb(156,154,146)" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- ═══════════════════ INIT: scherm uitzetten ═══════════════════ -->
+  <g>
+    <rect x="210" y="114" width="260" height="56" rx="8" fill="rgb(12,68,124)" stroke="rgb(133,183,235)" stroke-width="0.5"/>
+    <text x="340" y="134" text-anchor="middle" dominant-baseline="central" fill="rgb(181,212,244)" font-family="'Anthropic Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="14" font-weight="500">Scherm uitzetten</text>
+    <text x="340" y="154" text-anchor="middle" dominant-baseline="central" fill="rgb(133,183,235)" font-family="'Anthropic Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="12">Starttoestand: scherm uit</text>
+  </g>
+
+  <!-- Pijl 2 -->
+  <line x1="340" y1="170" x2="340" y2="210" stroke="rgb(156,154,146)" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- ═══════════════════ DIAMANT: persoon gedetecteerd? ═══════════════════ -->
+  <g>
+    <path d="M340,210 L470,270 L340,330 L210,270 Z" fill="rgb(225,245,238)" stroke="rgb(15,110,86)" stroke-width="0.5"/>
+    <text x="340" y="262" text-anchor="middle" dominant-baseline="central" fill="rgb(159,225,203)" font-family="'Anthropic Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="14" font-weight="500">Persoon</text>
+    <text x="340" y="280" text-anchor="middle" dominant-baseline="central" fill="rgb(159,225,203)" font-family="'Anthropic Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="14" font-weight="500">gedetecteerd?</text>
+  </g>
+
+  <!-- NEE rechts: wacht en scan opnieuw -->
+  <line x1="470" y1="270" x2="540" y2="270" stroke="rgb(156,154,146)" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <text x="500" y="258" text-anchor="middle" fill="rgb(194,192,182)" font-family="'Anthropic Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="12">NEE</text>
+  <g>
+    <rect x="540" y="248" width="110" height="44" rx="8" fill="rgb(68,68,65)" stroke="rgb(180,178,169)" stroke-width="0.5"/>
+    <text x="595" y="264" text-anchor="middle" dominant-baseline="central" fill="rgb(211,209,199)" font-family="'Anthropic Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="14" font-weight="500">Wacht</text>
+    <text x="595" y="280" text-anchor="middle" dominant-baseline="central" fill="rgb(180,178,169)" font-family="'Anthropic Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="12">0.2s pauze</text>
+  </g>
+  <!-- teruglooplijn rechts: terug naar buitenste lus -->
+  <path d="M650 270 L665 270 L665 200 L340 200" fill="none" stroke="rgba(222,220,209,0.4)" stroke-width="1" marker-end="url(#arrow)" mask="url(#gap-mask)"/>
+
+  <!-- JA pijl omlaag -->
+  <text x="295" y="345" text-anchor="middle" fill="rgb(194,192,182)" font-family="'Anthropic Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="12">JA</text>
+  <line x1="340" y1="330" x2="340" y2="370" stroke="rgb(156,154,146)" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- ═══════════════════ SCHERM AANZETTEN ═══════════════════ -->
+  <g>
+    <rect x="210" y="370" width="260" height="56" rx="8" fill="rgb(12,68,124)" stroke="rgb(133,183,235)" stroke-width="0.5"/>
+    <text x="340" y="390" text-anchor="middle" dominant-baseline="central" fill="rgb(181,212,244)" font-family="'Anthropic Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="14" font-weight="500">Scherm aanzetten</text>
+    <text x="340" y="410" text-anchor="middle" dominant-baseline="central" fill="rgb(133,183,235)" font-family="'Anthropic Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="12">wlr-randr aan + draaien + buzzer</text>
+  </g>
+
+  <!-- Pijl -->
+  <line x1="340" y1="426" x2="340" y2="466" stroke="rgb(156,154,146)" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- ═══════════════════ INNER LOOP: DIAMANT persoon aanwezig? ═══════════════════ -->
+  <g>
+    <path d="M340,466 L470,526 L340,586 L210,526 Z" fill="rgb(225,245,238)" stroke="rgb(15,110,86)" stroke-width="0.5"/>
+    <text x="340" y="518" text-anchor="middle" dominant-baseline="central" fill="rgb(159,225,203)" font-family="'Anthropic Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="14" font-weight="500">Persoon nog</text>
+    <text x="340" y="536" text-anchor="middle" dominant-baseline="central" fill="rgb(159,225,203)" font-family="'Anthropic Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="14" font-weight="500">aanwezig?</text>
+  </g>
+
+  <!-- JA: timer resetten (rechts) -->
+  <line x1="470" y1="526" x2="540" y2="526" stroke="rgb(156,154,146)" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <text x="500" y="514" text-anchor="middle" fill="rgb(194,192,182)" font-family="'Anthropic Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="12">JA</text>
+  <g>
+    <rect x="540" y="504" width="110" height="44" rx="8" fill="rgb(12,68,124)" stroke="rgb(133,183,235)" stroke-width="0.5"/>
+    <text x="595" y="520" text-anchor="middle" dominant-baseline="central" fill="rgb(181,212,244)" font-family="'Anthropic Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="14" font-weight="500">Timer reset</text>
+    <text x="595" y="536" text-anchor="middle" dominant-baseline="central" fill="rgb(133,183,235)" font-family="'Anthropic Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="12">Activiteit bijwerken</text>
+  </g>
+  <!-- pijl terug omhoog naar inner lus -->
+  <path d="M650 526 L665 526 L665 456 L340 456" fill="none" stroke="rgba(222,220,209,0.4)" stroke-width="1" marker-end="url(#arrow)" mask="url(#gap-mask)"/>
+
+  <!-- NEE: omlaag naar interactiecheck -->
+  <text x="295" y="601" text-anchor="middle" fill="rgb(194,192,182)" font-family="'Anthropic Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="12">NEE</text>
+  <line x1="340" y1="586" x2="340" y2="626" stroke="rgb(156,154,146)" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- ═══════════════════ DIAMANT: muisinteractie? ═══════════════════ -->
+  <g>
+    <path d="M340,626 L470,686 L340,746 L210,686 Z" fill="rgb(225,245,238)" stroke="rgb(15,110,86)" stroke-width="0.5"/>
+    <text x="340" y="678" text-anchor="middle" dominant-baseline="central" fill="rgb(159,225,203)" font-family="'Anthropic Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="14" font-weight="500">Muis</text>
+    <text x="340" y="696" text-anchor="middle" dominant-baseline="central" fill="rgb(159,225,203)" font-family="'Anthropic Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="14" font-weight="500">bewogen?</text>
+  </g>
+
+  <!-- JA: timer resetten (rechts) -->
+  <line x1="470" y1="686" x2="540" y2="686" stroke="rgb(156,154,146)" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <text x="500" y="674" text-anchor="middle" fill="rgb(194,192,182)" font-family="'Anthropic Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="12">JA</text>
+  <g>
+    <rect x="540" y="664" width="110" height="44" rx="8" fill="rgb(12,68,124)" stroke="rgb(133,183,235)" stroke-width="0.5"/>
+    <text x="595" y="680" text-anchor="middle" dominant-baseline="central" fill="rgb(181,212,244)" font-family="'Anthropic Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="14" font-weight="500">Timer reset</text>
+    <text x="595" y="696" text-anchor="middle" dominant-baseline="central" fill="rgb(133,183,235)" font-family="'Anthropic Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="12">Muispositie opslaan</text>
+  </g>
+  <!-- pijl terug omhoog naar inner lus -->
+  <path d="M650 686 L665 686 L665 456 L340 456" fill="none" stroke="rgba(222,220,209,0.4)" stroke-width="1" marker-end="url(#arrow)" mask="url(#gap-mask)"/>
+
+  <!-- NEE: omlaag naar timer check -->
+  <text x="295" y="761" text-anchor="middle" fill="rgb(194,192,182)" font-family="'Anthropic Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="12">NEE</text>
+  <line x1="340" y1="746" x2="340" y2="786" stroke="rgb(156,154,146)" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- ═══════════════════ DIAMANT: 10s geen activiteit? ═══════════════════ -->
+  <g>
+    <path d="M340,786 L470,846 L340,906 L210,846 Z" fill="rgb(225,245,238)" stroke="rgb(15,110,86)" stroke-width="0.5"/>
+    <text x="340" y="838" text-anchor="middle" dominant-baseline="central" fill="rgb(159,225,203)" font-family="'Anthropic Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="14" font-weight="500">10s geen</text>
+    <text x="340" y="856" text-anchor="middle" dominant-baseline="central" fill="rgb(159,225,203)" font-family="'Anthropic Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="14" font-weight="500">activiteit?</text>
+  </g>
+
+  <!-- NEE links: terug naar inner lus -->
+  <line x1="210" y1="846" x2="140" y2="846" stroke="rgb(156,154,146)" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <text x="168" y="834" text-anchor="middle" fill="rgb(194,192,182)" font-family="'Anthropic Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="12">NEE</text>
+  <path d="M140 846 L140 456 L210 456" fill="none" stroke="rgba(222,220,209,0.4)" stroke-width="1" marker-end="url(#arrow)" mask="url(#gap-mask)"/>
+  <text x="76" y="660" text-anchor="end" fill="rgb(194,192,182)" font-family="'Anthropic Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="12">Blijf</text>
+  <text x="76" y="676" text-anchor="end" fill="rgb(194,192,182)" font-family="'Anthropic Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="12">scannen</text>
+
+  <!-- JA: scherm uitzetten -->
+  <text x="295" y="921" text-anchor="middle" fill="rgb(194,192,182)" font-family="'Anthropic Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="12">JA</text>
+  <line x1="340" y1="906" x2="340" y2="946" stroke="rgb(156,154,146)" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- ═══════════════════ SCHERM UITZETTEN ═══════════════════ -->
+  <g>
+    <rect x="210" y="946" width="260" height="56" rx="8" fill="rgb(12,68,124)" stroke="rgb(133,183,235)" stroke-width="0.5"/>
+    <text x="340" y="966" text-anchor="middle" dominant-baseline="central" fill="rgb(181,212,244)" font-family="'Anthropic Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="14" font-weight="500">Scherm uitzetten</text>
+    <text x="340" y="986" text-anchor="middle" dominant-baseline="central" fill="rgb(133,183,235)" font-family="'Anthropic Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="12">wlr-randr --off</text>
+  </g>
+
+  <!-- Teruglooplijn scherm uit → buitenste lus -->
+  <path d="M210 974 L80 974 L80 200 L210 200" fill="none" stroke="rgba(222,220,209,0.4)" stroke-width="1" marker-end="url(#arrow)" mask="url(#gap-mask)"/>
+  <text x="76" y="580" text-anchor="end" fill="rgb(194,192,182)" font-family="'Anthropic Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="12">Opnieuw</text>
+  <text x="76" y="596" text-anchor="end" fill="rgb(194,192,182)" font-family="'Anthropic Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="12">scannen</text>
+
+  <!-- ═══════════════════ CTRL+C ═══════════════════ -->
+  <!-- zijwaartse pijl vanuit de inner loop naar Ctrl+C (gesimuleerd via positie) -->
+  <line x1="340" y1="1002" x2="340" y2="1042" stroke="rgb(156,154,146)" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <g>
+    <rect x="210" y="1042" width="260" height="44" rx="8" fill="rgb(113,43,19)" stroke="rgb(240,153,123)" stroke-width="0.5"/>
+    <text x="340" y="1058" text-anchor="middle" dominant-baseline="central" fill="rgb(245,196,179)" font-family="'Anthropic Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="14" font-weight="500">Ctrl+C ingedrukt</text>
+    <text x="340" y="1076" text-anchor="middle" dominant-baseline="central" fill="rgb(240,153,123)" font-family="'Anthropic Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="12">KeyboardInterrupt</text>
+  </g>
+
+  <!-- Pijl naar afsluiten -->
+  <line x1="340" y1="1086" x2="340" y2="1126" stroke="rgb(156,154,146)" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- ═══════════════════ EINDE ═══════════════════ -->
+  <g>
+    <rect x="230" y="1126" width="220" height="44" rx="22" fill="rgb(68,68,65)" stroke="rgb(180,178,169)" stroke-width="0.5"/>
+    <text x="340" y="1148" text-anchor="middle" dominant-baseline="central" fill="rgb(211,209,199)" font-family="'Anthropic Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="14" font-weight="500">Programma sluit af</text>
+  </g>
+
+</svg>
