@@ -37,7 +37,7 @@ De [code](/outputs/scherm.py) maakt gebruik van de tkinter library
 Het wake-up mechanisme maakt gebruik van de afstandssensor om te detecteren ofdat er een persoon in de buurt is. Dit vertelt dan aan dePRaspberry pi dat het scherm aan moet alsook dat de buzzer moet afgaan. Zo is er een visuele en auditieve cue om aan de gebruiker te communiceren dat het scherm aan staat. Is er geen interactie met het scherm of staat er niemand meer voor zal het scherm na 10 seconden terug uit gaan.
 De code volgt deze logica:
 <p align="center"> 
-<img src="/img/wake-up_flowchart.svg" width="100%">
+<img src="/img/wakeup_flowchart.svg" width="100%">
 
 ### Arduino
 
