@@ -799,8 +799,8 @@ const handleCreateCategory = async (name: string, iconName: string, color: strin
 
   return (
     <DndProvider backend={isTouchDevice() ? TouchBackend : HTML5Backend}>
-      <div className={`w-screen h-screen overflow-hidden bg-gradient-to-br ${theme.bg}`}>
-        <div className="w-full h-full flex flex-col p-2">
+      <div className={`min-h-screen bg-gradient-to-br ${theme.bg} p-1.5 md:p-6 flex items-center justify-center`}>
+        <div className="w-full max-w-4xl">
           {/* Header with Quick Actions */}
           <div className="mb-2 md:mb-6">
             {/* Quick Add Buttons */}
@@ -838,7 +838,7 @@ const handleCreateCategory = async (name: string, iconName: string, color: strin
 
           {/* Main Fridge Layout */}
           <div className={`${theme.cardBg} rounded-lg md:rounded-3xl shadow-2xl p-1.5 md:p-6 border ${theme.border}`}>
-            <div className="flex flex-col lg:flex-row gap-2 lg:gap-6 h-full">
+            <div className="flex flex-row gap-1.5 md:gap-6 justify-center items-stretch">
               {/* Linker kant - Kast Zones */}
               {kastZones.length > 0 && (
                 <div className="flex-[3] max-w-lg">
