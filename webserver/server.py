@@ -54,7 +54,9 @@ def add_category():
 
     new_category = {
         "id": category["id"],
-        "name": category["name"]
+        "name": category["name"],
+        "iconName": category.get("iconName", "Apple"),
+        "color": category.get("color", "bg-gray-500")
     }
 
     data["categories"].append(new_category)
