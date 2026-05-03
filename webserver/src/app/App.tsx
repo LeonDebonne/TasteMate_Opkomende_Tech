@@ -738,7 +738,7 @@ const handleCreateCategory = async (name: string, iconName: string, color: strin
     const gridCols = zoneType === 'deur' ? 'grid-cols-1' : 'grid-cols-3';
 
     return (
-      <div className="w-screen h-screen overflow-hidden flex flex-col">
+      <div
         key={zoneKey}
         className={`${zoneType === 'deur' ? 'flex-1 flex flex-col' : ''} ${isLast ? '' : 'mb-3 md:mb-4'}`}
       >
