@@ -735,19 +735,19 @@ const handleCreateCategory = async (name: string, iconName: string, color: strin
     if (!zoneData) return null;
 
     const zoneName = zoneNames[zoneKey] || zoneKey;
-    const gridCols = zoneType === 'deur' ? 'grid-cols-1' : 'grid-cols-2 sm:grid-cols-3';
+    const gridCols = zoneType === 'deur' ? 'grid-cols-1' : 'grid-cols-2';
 
     return (
       <div 
         key={zoneKey}
-        className={`flex flex-col min-h-0 ${zoneType === 'deur' ? 'flex-1' : ''} ${isLast ? '' : 'mb-2'}`}
+        className={`flex flex-col flex-1 min-h-0 ${isLast ? '' : 'mb-2'}`}
       >
         <div className="flex items-center gap-1.5 mb-1">
           <div className={`w-2.5 h-2.5 md:w-3.5 md:h-3.5 ${getZoneColor(zoneKey)} rounded-full shadow-sm`}></div>
           <h3 className={`text-[10px] sm:text-xs font-bold ${theme.cardText} uppercase tracking-wider truncate`}>{zoneName}</h3>
         </div>
-        <div className={`${theme.cardBg} rounded-lg p-1.5 border ${theme.border} shadow-sm min-h-0 overflow-hidden ${zoneType === 'deur' ? 'flex-1 flex flex-col' : ''}`}>
-          <div className={`grid ${gridCols} gap-1.5 ${zoneType === 'deur' ? 'h-full content-between' : ''}`}>
+        <div className={`${theme.cardBg} rounded-lg p-1.5 border ${theme.border} shadow-sm flex-1 min-h-0 overflow-hidden flex flex-col`}>
+          <div className={`grid ${gridCols} gap-1.5 h-full auto-rows-fr ${zoneType === 'deur' ? 'content-between' : ''}`}>
             {zoneData.map((categoryId: string | null, index: number) => {
               if (!categoryId) {
                 return (
@@ -841,8 +841,8 @@ const handleCreateCategory = async (name: string, iconName: string, color: strin
             <div className="flex flex-row gap-2 h-full items-stretch">
               {/* Linker kant - Kast Zones */}
               {kastZones.length > 0 && (
-                <div className="flex-[3] min-w-0 min-h-0 overflow-hidden">
-                  <div className={`${theme.cardBg} rounded-xl p-2 border ${theme.border} shadow-lg h-full min-h-0 overflow-auto`}>
+                <div className="flex-[3] min-w-0 min-h-0 h-full overflow-hidden flex flex-col">
+                  <div className={`${theme.cardBg} rounded-xl p-2 border ${theme.border} shadow-lg h-full min-h-0 overflow-hidden flex flex-col`}>
                     {kastZones.map((zoneKey, index) => 
                       renderZone(zoneKey, 'kast', index === kastZones.length - 1)
                     )}
