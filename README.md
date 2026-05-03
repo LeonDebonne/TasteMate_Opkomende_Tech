@@ -7,6 +7,7 @@ Het eerste onderdeel wordt geactiveerd via een wake-upmechanisme. Dit maakt gebr
 Het tweede onderdeel werkt via een microfoon die luistert naar de vraag van de blinde of slechtziende persoon. Via een AI-assistent, die gekoppeld is aan Gemini, wordt deze vraag beantwoord met informatie uit de interface. Dit antwoord wordt vervolgens via een luidspreker gecommuniceerd naar de gebruiker.
 
 ## Validatie inputs
+Hiervoor werd de [datasheet](/datasheets/Raspberry%20PI.pdf) van de Raspberry Pi geraadpleegd
 ### Afstandssensor
 De afstandssensor wordt in het project gebruikt om te detecteren ofdat er een persoon voor de koelkast staat. Deze meet de afstand tot een bepaald object.
 Voor het valideren van de aansluiting is gebruik gemaakt van de [datasheet](/datasheets/HCSR04.pdf). De opstelling bevat een Raspberry Pi, de sensor en vier jumpers.
@@ -17,6 +18,7 @@ Voor het valideren van de aansluiting is gebruik gemaakt van de [datasheet](/dat
 De [code](/inputs/afstandssensor.py) maakt gebruik van de gpiozero library en de time library.
 
 ## Validatie outputs
+Hiervoor werd de [datasheet](/datasheets/Raspberry%20PI.pdf) van de Raspberry Pi geraadpleegd
 ### Buzzer
 De buzzer maakt een kort geluid om gebruikers te vertellen dat het scherm aan staat. Voor het valideren van de aansluiting is gebruik gemaakt van de [datasheet](/datasheets/Buzzer.pdf). De opstelling bevat een Raspberry Pi, de buzzer en twee jumpers.
 
