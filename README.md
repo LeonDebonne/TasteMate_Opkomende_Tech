@@ -66,7 +66,7 @@ De sensoren zijn verbonden met de GPIO-pinnen. Het externe scherm is verbonden v
 <p align="center"> 
 <img src="/img/Opstelling_WakeUP.JPEG" width="50%">
 
-Dit [voorbeeld](/Demo's/IMG_3860.MOV) toont de werking van de interface en het wake-up mechanisme.
+Dit [voorbeeld](https://drive.google.com/file/d/15hXSTagw5abH1k6NjG4eRMN9H7aIJM2_/view?usp=drive_link) toont de werking van de interface en het wake-up mechanisme.
 
 ## Interface
 
