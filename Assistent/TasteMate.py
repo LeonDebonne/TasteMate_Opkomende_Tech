@@ -72,7 +72,7 @@ async def main():
     # Microfoon openen
     with sr.Microphone() as mic:
         # Eenmalig luisteren naar omgevingsgeluid om stilte te herkennen
-        r.adjust_for_ambient_noise(mic, duration=0.5)
+        r.adjust_for_ambient_noise(mic, duration=1)
         print("Klaar! Stel je vraag.")
 
         try:
@@ -163,4 +163,7 @@ Gebruik correcte leestekens in je antwoorden, zoals komma's bij opsommingen en p
 
 
 # Programma starten
-asyncio.run(main())
+try:
+    asyncio.run(main())
+except KeyboardInterrupt:
+    pass  # Stilletjes afsluiten, bericht is al geprint in main()
