@@ -735,19 +735,19 @@ const handleCreateCategory = async (name: string, iconName: string, color: strin
     if (!zoneData) return null;
 
     const zoneName = zoneNames[zoneKey] || zoneKey;
-    const gridCols = zoneType === 'deur' ? 'grid-cols-1' : 'grid-cols-3';
+    const gridCols = zoneType === 'deur' ? 'grid-cols-1' : 'grid-cols-2 sm:grid-cols-3';
 
     return (
-      <div
+      <div 
         key={zoneKey}
-        className={`${zoneType === 'deur' ? 'flex-1 flex flex-col' : ''} ${isLast ? '' : 'mb-3 md:mb-4'}`}
+        className={`flex flex-col min-h-0 ${zoneType === 'deur' ? 'flex-1' : ''} ${isLast ? '' : 'mb-2'}`}
       >
-        <div className="flex items-center gap-1.5 md:gap-2.5 mb-1.5 md:mb-2.5">
+        <div className="flex items-center gap-1.5 mb-1">
           <div className={`w-2.5 h-2.5 md:w-3.5 md:h-3.5 ${getZoneColor(zoneKey)} rounded-full shadow-sm`}></div>
-          <h3 className={`text-xs md:text-base font-bold ${theme.cardText} uppercase tracking-wider`}>{zoneName}</h3>
+          <h3 className={`text-[10px] sm:text-xs font-bold ${theme.cardText} uppercase tracking-wider truncate`}>{zoneName}</h3>
         </div>
-        <div className={`${theme.cardBg} rounded-lg md:rounded-xl p-1.5 md:p-2.5 border ${theme.border} shadow-sm ${zoneType === 'deur' ? 'flex-1 flex flex-col' : ''}`}>
-          <div className={`grid ${gridCols} gap-1.5 md:gap-2.5 ${zoneType === 'deur' ? 'h-full content-between' : ''}`}>
+        <div className={`${theme.cardBg} rounded-lg p-1.5 border ${theme.border} shadow-sm min-h-0 overflow-hidden ${zoneType === 'deur' ? 'flex-1 flex flex-col' : ''}`}>
+          <div className={`grid ${gridCols} gap-1.5 ${zoneType === 'deur' ? 'h-full content-between' : ''}`}>
             {zoneData.map((categoryId: string | null, index: number) => {
               if (!categoryId) {
                 return (
@@ -799,50 +799,50 @@ const handleCreateCategory = async (name: string, iconName: string, color: strin
 
   return (
     <DndProvider backend={isTouchDevice() ? TouchBackend : HTML5Backend}>
-      <div className={`min-h-screen bg-gradient-to-br ${theme.bg} p-1.5 md:p-6 flex items-center justify-center`}>
-        <div className="w-full max-w-4xl">
+      <div className={`w-screen h-screen overflow-hidden bg-gradient-to-br ${theme.bg}`}>
+        <div className="w-full h-full flex flex-col p-2 gap-2">
           {/* Header with Quick Actions */}
-          <div className="mb-2 md:mb-6">
+          <div className="shrink-0">
             {/* Quick Add Buttons */}
-            <div className="flex flex-row justify-center gap-1.5 md:gap-3">
+            <div className="flex flex-row justify-center gap-2">
               <Button
                 onClick={() => setShowAddProductModal(true)}
-                className="bg-blue-600 hover:bg-blue-700 text-white shadow-md hover:shadow-lg transition-all duration-200 p-2 md:p-4 rounded-lg md:rounded-xl"
+                className="bg-blue-600 hover:bg-blue-700 text-white shadow-md hover:shadow-lg transition-all duration-200 p-2.5 rounded-xl"
               >
-                <Plus className="w-4 h-4 md:w-6 md:h-6" />
+                <Plus className="w-5 h-5" />
                 <span className="sr-only">Product toevoegen</span>
               </Button>
               <Button
                 onClick={() => setShowReceiptScanModal(true)}
-                className="bg-blue-600 hover:bg-blue-700 text-white shadow-md hover:shadow-lg transition-all duration-200 p-2 md:p-4 rounded-lg md:rounded-xl"
+                className="bg-blue-600 hover:bg-blue-700 text-white shadow-md hover:shadow-lg transition-all duration-200 p-2.5 rounded-xl"
               >
-                <Camera className="w-4 h-4 md:w-6 md:h-6" />
+                <Camera className="w-5 h-5" />
                 <span className="sr-only">Kassaticket scannen</span>
               </Button>
               <Button
                 onClick={() => setShowColorThemeModal(true)}
-                className="bg-blue-600 hover:bg-blue-700 text-white shadow-md hover:shadow-lg transition-all duration-200 p-2 md:p-4 rounded-lg md:rounded-xl"
+                className="bg-blue-600 hover:bg-blue-700 text-white shadow-md hover:shadow-lg transition-all duration-200 p-2.5 rounded-xl"
               >
-                <Palette className="w-4 h-4 md:w-6 md:h-6" />
+                <Palette className="w-5 h-5" />
                 <span className="sr-only">Kleurenschema</span>
               </Button>
               <Button
                 onClick={() => setShowZoneManagementModal(true)}
-                className="bg-blue-600 hover:bg-blue-700 text-white shadow-md hover:shadow-lg transition-all duration-200 p-2 md:p-4 rounded-lg md:rounded-xl"
+                className="bg-blue-600 hover:bg-blue-700 text-white shadow-md hover:shadow-lg transition-all duration-200 p-2.5 rounded-xl"
               >
-                <LayoutGrid className="w-4 h-4 md:w-6 md:h-6" />
+                <LayoutGrid className="w-5 h-5" />
                 <span className="sr-only">Zones beheren</span>
               </Button>
             </div>
           </div>
 
           {/* Main Fridge Layout */}
-          <div className={`${theme.cardBg} rounded-lg md:rounded-3xl shadow-2xl p-1.5 md:p-6 border ${theme.border}`}>
-            <div className="flex flex-row gap-1.5 md:gap-6 justify-center items-stretch">
+          <div className={`${theme.cardBg} rounded-2xl shadow-2xl p-2 border ${theme.border} flex-1 min-h-0 overflow-hidden`}>
+            <div className="flex flex-row gap-2 h-full items-stretch">
               {/* Linker kant - Kast Zones */}
               {kastZones.length > 0 && (
-                <div className="flex-[3] max-w-lg">
-                  <div className={`${theme.cardBg} rounded-lg md:rounded-2xl p-1.5 md:p-4 border ${theme.border} shadow-lg h-full`}>
+                <div className="flex-[3] min-w-0 min-h-0 overflow-hidden">
+                  <div className={`${theme.cardBg} rounded-xl p-2 border ${theme.border} shadow-lg h-full min-h-0 overflow-auto`}>
                     {kastZones.map((zoneKey, index) => 
                       renderZone(zoneKey, 'kast', index === kastZones.length - 1)
                     )}
@@ -852,12 +852,12 @@ const handleCreateCategory = async (name: string, iconName: string, color: strin
 
               {/* Rechter kant - Deur Zones */}
               {deurZones.length > 0 && (
-                <div className="w-24 md:w-40">
-                  <div className={`${theme.cardBg} rounded-lg md:rounded-2xl p-1.5 md:p-4 border ${theme.border} shadow-lg h-full flex flex-col`}>
+                <div className="flex-[1] min-w-[90px] max-w-[32vw] min-h-0 overflow-hidden">
+                  <div className={`${theme.cardBg} rounded-xl p-2 border ${theme.border} shadow-lg h-full min-h-0 overflow-auto flex flex-col`}>
                     {deurZones.map((zoneKey, index) => {
                       const isLastZone = index === deurZones.length - 1;
                       return (
-                        <div key={zoneKey} className={`flex-1 flex flex-col ${!isLastZone ? 'mb-2 md:mb-4' : ''}`}>
+                        <div key={zoneKey} className={`flex-1 flex flex-col min-h-0 ${!isLastZone ? 'mb-2' : ''}`}>
                           {renderZone(zoneKey, 'deur', isLastZone)}
                         </div>
                       );
