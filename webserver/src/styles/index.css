@@ -130,29 +130,16 @@ dit is mijn css pas hem aan
     opacity: 0;
   }
 }
-html, body {
+html,
+body,
+#root {
   margin: 0;
   padding: 0;
-  overflow: hidden;
-  width: 100vw;
-  height: 100vh;
-}
-
-#root {
-  position: fixed;
   width: 100vw;
   height: 100vh;
   overflow: hidden;
 }
 
-/* Alles in je app draaien */
-#root > * {
-  position: absolute;
-  width: 100vh;
-  height: 100vw;
-  top: 0;
-  left: 100vw;
-  transform: rotate(90deg);
-  transform-origin: top left;
-  overflow: hidden;
+* {
+  box-sizing: border-box;
 }
