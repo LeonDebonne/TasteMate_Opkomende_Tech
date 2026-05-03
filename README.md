@@ -61,7 +61,12 @@ Naast de library om de interactie te meten, wordt er ook gebruikgemaakt van de g
 <p align="center"> 
 <img src="/img/Schema_Wakeup_Rpi.png" width="50%">
 
-De sensoren zijn verbonden met de GPIO-pinnen. Het externe scherm is verbonden via een HDMI-kabel en twee USB-naar-micro-USB-kabels. Deze laatste twee regelen de stroomtoevoer en het capacitieve touchaspect van het scherm. Het scherm dat gebruikt wordt, is een 4.3 inch HDMI LCD dat met touch werkt. De benodigde stroom om de Raspberry Pi te laten draaien wordt toegevoerd door een powerbank.
+De sensoren zijn verbonden met de GPIO-pinnen. Het externe scherm is verbonden via een HDMI-kabel en twee USB-naar-micro-USB-kabels. Deze laatste twee regelen de stroomtoevoer en het capacitieve touchaspect van het scherm. Het scherm dat gebruikt wordt, is een 4.3 inch HDMI LCD dat met touch werkt. De benodigde stroom om de Raspberry Pi te laten draaien wordt toegevoerd door een powerbank. De opstelling ziet er zo uit :
+
+<p align="center"> 
+<img src="/img/Opstelling_WakeUP.JPEG" width="50%">
+
+Dit [voorbeeld](/Demo's/IMG_3860.MOV) toont de werking van de interface en het wake-up mechanisme.
 
 ## Interface
 
