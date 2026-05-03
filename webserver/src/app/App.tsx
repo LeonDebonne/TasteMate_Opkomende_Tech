@@ -200,8 +200,8 @@ const [inventory, setInventory] = useState<Record<string, FoodItem[]>>(() => {
           data.categories.map((cat: any) => ({
             id: cat.id,
             name: cat.name,
-            icon: Apple,
-            color: "bg-gray-500",
+            icon: getIconByName(cat.iconName || "Apple"),
+            color: cat.color || "bg-gray-500",
           }))
         );
         if (data.fridgeZones) setFridgeZones(data.fridgeZones);
@@ -463,6 +463,8 @@ const handleCreateCategory = async (name: string, iconName: string, color: strin
     body: JSON.stringify({
       id: newCategory.id,
       name: newCategory.name,
+      iconName,
+      color,
     }),
   });
 
