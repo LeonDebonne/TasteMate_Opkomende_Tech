@@ -45,9 +45,19 @@ Er is gebruikgemaakt van enkele Arduino-componenten, zoals de Arduino Uno, een a
 Het resultaat is quick en dirty gerealiseerd om zo weinig tijd te verliezen aan het opfleuren van iets dat louter testen van een concept is.
 Hier onder is het Wokwi schema te vinden van het arduino project. De code is te vinden onder [Arduino_Code](/wake_up/Arduino_Code).
 
-<img src="/img/Schema_Wakeup.jpg" width="100%">
+<img src="/img/Schema_Wakeup.jpg" width="50%">
+
+Deze test is uitgevoerd om de logica te testen bij een gebruiksvriendelijker ecosysteem dan dat van Raspberry pi. Dit doordat we al een introductie gekregen hebben over Arduino en eerdere kennis verworven hebben. Het finale systeem maakt wel gebruik van de Raspberry pi omdat dit de daadwerkelijke interface moet afspelen.
 
 ### Raspberry Pi
+
+Dit onderdeel volgt dezelfde logica zoals de test met de Arduino. Er zijn hier en daar enkele tweaks uitgevoerd om de workflow te maximaliseren. Dit zit vooral in de delays tussen scans en detectie. Het systeem detecteert dus als er een persoon voor de koelkast staat. Nu gaat het scherm terug af na 10 seconden als er geen interactie is met het scherm. Dit wordt gemeten met behulp van een library voor muis/touch interacties nameljijk pyautogui. Na iedere interactie wordt er 30 seconden gewacht tot een volgende scan wordt uitgevoerd. Deze bepaald dan opnieuw de schermstatus.
+
+Naast de library voor de interactie te meten wordt er nog gebruik gemaakt van gpiozero library, deze dient voor het definiëren van de sensoren en actuatoren. Ook de time en subproces libraries worden aangeroepen. Deze dienen respectievelijk voor de tijdsdelays en het uitvoeren van systeemcommando's. Het laatste is nodig om het scherm aan en uit te krijgen. Hieronder bevindt zich de schakeling die wordt aangestuurd via deze [Python code](/wake_up/wake_up.py).
+
+<img src="/img/Schema_Wakeup_Rpi.png" width="50%">
+
+De sensoren zijn verbonden met de GPIO pinnen. Het externe scherm is verbonden via een HDMI-kabel en 2 USB naar micro-USB kabels. Deze laatse twee regelen de stroomtoevoer en het capacitieve touch aspect van het scherm. Het scherm dat gebruikt wordt is een 4.3 inch HDMI LCD die met touch werkt. De benodigde stroom om de Raspberry pi te runnen wordt toegevoerd door een powerbank.
 
 ## Interface
 
