@@ -9,7 +9,7 @@ Het tweede onderdeel werkt via een microfoon die luistert naar de vraag van de b
 ## Validatie inputs
 ### Afstandssensor
 De afstandssensor wordt in het project gebruikt om te detecteren ofdat er een persoon voor de koelkast staat. Deze meet de afstand tot een bepaald object.
-Voor het valideren van de aansluiting is gebruik gemaakt van de [datasheet](/datasheets/HCSR04.pdf). De opstelling bevat een Raspberry pi, de sensor en vier jumpers.
+Voor het valideren van de aansluiting is gebruik gemaakt van de [datasheet](/datasheets/HCSR04.pdf). De opstelling bevat een Raspberry Pi, de sensor en vier jumpers.
 
 <p align="center"> 
 <img src="/img/Schema_Afstandssensor.png" width="50%">
@@ -18,7 +18,7 @@ De [code](/inputs/afstandssensor.py) maakt gebruik van de gpiozero library en de
 
 ## Validatie outputs
 ### Buzzer
-De buzzer maakt een kort geluid om gebruikers te vertellen dat het scherm aan staat. Voor het valideren van de aansluiting is gebruik gemaakt van de [datasheet](/datasheets/Buzzer.pdf). De opstelling bevat een Raspberry pi, de buzzer en twee jumpers.
+De buzzer maakt een kort geluid om gebruikers te vertellen dat het scherm aan staat. Voor het valideren van de aansluiting is gebruik gemaakt van de [datasheet](/datasheets/Buzzer.pdf). De opstelling bevat een Raspberry Pi, de buzzer en twee jumpers.
 
 <p align="center"> 
 <img src="/img/Schema_Buzzer.png" width="50%">
@@ -27,12 +27,12 @@ De [code](/outputs/buzzer.py) maakt gebruik van de gpiozero library en de time l
 
 ### Scherm
 Het scherm toont de interface en kan gebruikt worden via touchscreen. Er wordt gebruik gemaakt van een 4.3 inch HDMI LCD. 
-De opstelling bevat een Raspberry pi, het scherm en een HDMI-kabel. De connectie gebeurt dus via de HDMI-kabel.
+De opstelling bevat een Raspberry Pi, het scherm en een HDMI-kabel. De connectie gebeurt dus via de HDMI-kabel.
 De [code](/outputs/scherm.py) maakt gebruik van de tkinter library
 
 ## Wake-up mechanisme
 
-Het wake-up mechanisme maakt gebruik van de afstandssensor om te detecteren ofdat er een persoon in de buurt is. Dit vertelt dan aan de Raspberry pi dat het scherm aan moet alsook dat de buzzer moet afgaan. Zo is er een visuele en auditieve cue om aan de gebruiker te communiceren dat het scherm aan staat. Is er geen interactie met het scherm of staat er niemand meer voor zal het scherm na 10 seconden terug uit gaan om dan te wachten voor 30 seconden en terug een scan te doen.
+Het wake-up mechanisme maakt gebruik van de afstandssensor om te detecteren ofdat er een persoon in de buurt is. Dit vertelt dan aan dePRaspberry pi dat het scherm aan moet alsook dat de buzzer moet afgaan. Zo is er een visuele en auditieve cue om aan de gebruiker te communiceren dat het scherm aan staat. Is er geen interactie met het scherm of staat er niemand meer voor zal het scherm na 10 seconden terug uit gaan om dan te wachten voor 30 seconden en terug een scan te doen.
 De code volgt deze logica:
 <p align="center"> 
 <img src="/img/Flowchart wake-up.png" width="100%">
@@ -45,25 +45,27 @@ Er is gebruikgemaakt van enkele Arduino-componenten, zoals de Arduino Uno, een a
 Het resultaat is quick en dirty gerealiseerd om zo weinig tijd te verliezen aan het opfleuren van iets dat louter testen van een concept is.
 Hier onder is het Wokwi schema te vinden van het arduino project. De code is te vinden onder [Arduino_Code](/wake_up/Arduino_Code).
 
+<p align="center"> 
 <img src="/img/Schema_Wakeup.jpg" width="50%">
 
-Deze test is uitgevoerd om de logica te testen bij een gebruiksvriendelijker ecosysteem dan dat van Raspberry pi. Dit doordat we al een introductie gekregen hebben over Arduino en eerdere kennis verworven hebben. Het finale systeem maakt wel gebruik van de Raspberry pi omdat dit de daadwerkelijke interface moet afspelen.
+Deze test is uitgevoerd om de logica te testen bij een gebruiksvriendelijker ecosysteem dan dat van Raspberry Pi. Dit doordat we al een introductie gekregen hebben over Arduino en eerdere kennis verworven hebben. Het finale systeem maakt wel gebruik van de Raspberry Pi omdat dit de daadwerkelijke interface moet afspelen.
 
 ### Raspberry Pi
 
-Dit onderdeel volgt dezelfde logica zoals de test met de Arduino. Er zijn hier en daar enkele tweaks uitgevoerd om de workflow te maximaliseren. Dit zit vooral in de delays tussen scans en detectie. Het systeem detecteert dus als er een persoon voor de koelkast staat. Nu gaat het scherm terug af na 10 seconden als er geen interactie is met het scherm. Dit wordt gemeten met behulp van een library voor muis/touch interacties nameljijk pyautogui. Na iedere interactie wordt er 30 seconden gewacht tot een volgende scan wordt uitgevoerd. Deze bepaald dan opnieuw de schermstatus.
+Dit onderdeel volgt dezelfde logica als de test met de Arduino. Er zijn hier en daar enkele tweaks uitgevoerd om de workflow te maximaliseren. Dit zit vooral in de delays tussen scans en detectie. Het systeem detecteert dus of er een persoon voor de koelkast staat. Het scherm gaat nu terug uit na 10 seconden als er geen interactie is met het scherm. Dit wordt gemeten met behulp van een library voor muis-/touchinteracties, namelijk pyautogui. Na iedere interactie wordt er 30 seconden gewacht tot een volgende scan wordt uitgevoerd. Deze bepaalt dan opnieuw de schermstatus.
 
-Naast de library voor de interactie te meten wordt er nog gebruik gemaakt van gpiozero library, deze dient voor het definiëren van de sensoren en actuatoren. Ook de time en subproces libraries worden aangeroepen. Deze dienen respectievelijk voor de tijdsdelays en het uitvoeren van systeemcommando's. Het laatste is nodig om het scherm aan en uit te krijgen. Hieronder bevindt zich de schakeling die wordt aangestuurd via deze [Python code](/wake_up/wake_up.py).
+Naast de library om de interactie te meten, wordt er ook gebruikgemaakt van de gpiozero-library. Deze dient voor het definiëren van de sensoren en actuatoren. Ook de time- en subprocess-libraries worden aangeroepen. Deze dienen respectievelijk voor de tijdsdelays en het uitvoeren van systeemcommando’s. Dat laatste is nodig om het scherm aan en uit te zetten. Hieronder bevindt zich de schakeling die wordt aangestuurd via deze [Python code](/wake_up/wake_up.py).
 
+<p align="center"> 
 <img src="/img/Schema_Wakeup_Rpi.png" width="50%">
 
-De sensoren zijn verbonden met de GPIO pinnen. Het externe scherm is verbonden via een HDMI-kabel en 2 USB naar micro-USB kabels. Deze laatse twee regelen de stroomtoevoer en het capacitieve touch aspect van het scherm. Het scherm dat gebruikt wordt is een 4.3 inch HDMI LCD die met touch werkt. De benodigde stroom om de Raspberry pi te runnen wordt toegevoerd door een powerbank.
+De sensoren zijn verbonden met de GPIO-pinnen. Het externe scherm is verbonden via een HDMI-kabel en twee USB-naar-micro-USB-kabels. Deze laatste twee regelen de stroomtoevoer en het capacitieve touchaspect van het scherm. Het scherm dat gebruikt wordt, is een 4.3 inch HDMI LCD dat met touch werkt. De benodigde stroom om de Raspberry Pi te laten draaien wordt toegevoerd door een powerbank.
 
 ## Interface
 
 Op het scherm dat aan gaat door het wake-up mechanisme wordt de interface getoond. Dit houdt de invenstaris van de koelkast bij. Daarin zitten gegevens zoals de houdbaarheidsdatum, het aantal en de locatie van producten. 
 
-De applicatie maakt gebruik van 2 lokaal gehoste servers op de Raspberry pi. De interface is een lokale webserver die automatisch wordt weergegeven in kioskmodus op chromium. Dit is de browser op de Raspberry pi. Dit is een eenvoudige HTTP server op poort 5173. De logica en communicatie met de AI-assistent gebeurt via een Python backend server. Deze houdt de inventarisgegevens bij, die worden opgeslagen in een JSON-bestand die kan worden geraadpleegd door de AI.
+De applicatie maakt gebruik van 2 lokaal gehoste servers op de Raspberry Pi. De interface is een lokale webserver die automatisch wordt weergegeven in kioskmodus op chromium. Dit is de browser op de Raspberry Pi. Dit is een eenvoudige HTTP server op poort 5173. De logica en communicatie met de AI-assistent gebeurt via een Python backend server. Deze houdt de inventarisgegevens bij, die worden opgeslagen in een JSON-bestand die kan worden geraadpleegd door de AI.
 
 De interface zelf is ontworpen via FigmaMake. Alle code rondom het design en de werking van de interface zijn dus hieruit gekopieerd met hier en daar enkele tweaks met AI. De Python backend server en de JSON inventaris zijn achteraf met behulp van AI geschreven.
 
