@@ -11,7 +11,6 @@ BUZZER_PIN = 18
 
 DETECT_DISTANCE = 0.5 # detectieafstand in meter
 SCREEN_ON_TIME = 10 # scherm blijft 10 seconden aan zonder interactie nadat persoon weg is
-WAIT_NO_DETECTION = 30 # wachttijd als er niemand gedetecteerd wordt
 LOOP_DELAY = 0.2 # korte pauze voor CPU ontlasting
 
 sensor = DistanceSensor(
@@ -74,10 +73,7 @@ try:
     turn_screen_off() # scherm starten in uit toestand
 
     while True:
-        print("Scannen afstandssensor...")
-
         if is_person_detected(): # controleren of er een persoon is
-            print("Persoon gedetecteerd")
 
             if not screen_is_on: # scherm aanzetten en buzzer activeren bij eerste detectie
                 turn_screen_on()
@@ -98,14 +94,12 @@ try:
                     last_mouse_position = current_mouse_position # muispositie updaten
 
                 if now - last_activity_time >= SCREEN_ON_TIME: # 10 seconden geen persoon en geen interactie
-                    print("Geen activiteit, scherm uit")
                     turn_screen_off() # scherm uitzetten
 
                 time.sleep(LOOP_DELAY) # korte pauze om CPU te ontlasten
 
-        else: # geen persoon gedetecteerd
-            print("Niemand gedetecteerd, wachten 30 seconden")
-            time.sleep(WAIT_NO_DETECTION) # wachten voor volgende scan
+        else:
+            pass # geen wachttijd meer, blijft direct opnieuw scannen
 
         time.sleep(LOOP_DELAY) # korte pauze om CPU te ontlasten
 

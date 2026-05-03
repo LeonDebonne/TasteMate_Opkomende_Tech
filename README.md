@@ -34,7 +34,7 @@ De [code](/outputs/scherm.py) maakt gebruik van de tkinter library
 
 ## Wake-up mechanisme
 
-Het wake-up mechanisme maakt gebruik van de afstandssensor om te detecteren ofdat er een persoon in de buurt is. Dit vertelt dan aan dePRaspberry pi dat het scherm aan moet alsook dat de buzzer moet afgaan. Zo is er een visuele en auditieve cue om aan de gebruiker te communiceren dat het scherm aan staat. Is er geen interactie met het scherm of staat er niemand meer voor zal het scherm na 10 seconden terug uit gaan om dan te wachten voor 30 seconden en terug een scan te doen.
+Het wake-up mechanisme maakt gebruik van de afstandssensor om te detecteren ofdat er een persoon in de buurt is. Dit vertelt dan aan dePRaspberry pi dat het scherm aan moet alsook dat de buzzer moet afgaan. Zo is er een visuele en auditieve cue om aan de gebruiker te communiceren dat het scherm aan staat. Is er geen interactie met het scherm of staat er niemand meer voor zal het scherm na 10 seconden terug uit gaan.
 De code volgt deze logica:
 <p align="center"> 
 <img src="/img/Flowchart wake-up.png" width="100%">
@@ -54,7 +54,7 @@ Deze test is uitgevoerd om de logica te testen bij een gebruiksvriendelijker eco
 
 ### Raspberry Pi
 
-Dit onderdeel volgt dezelfde logica als de test met de Arduino. Er zijn hier en daar enkele tweaks uitgevoerd om de workflow te maximaliseren. Dit zit vooral in de delays tussen scans en detectie. Het systeem detecteert dus of er een persoon voor de koelkast staat. Het scherm gaat nu terug uit na 10 seconden als er geen interactie is met het scherm. Dit wordt gemeten met behulp van een library voor muis-/touchinteracties, namelijk pyautogui. Na iedere interactie wordt er 30 seconden gewacht tot een volgende scan wordt uitgevoerd. Deze bepaalt dan opnieuw de schermstatus.
+Dit onderdeel volgt dezelfde logica als de test met de Arduino. Er zijn hier en daar enkele tweaks uitgevoerd om de workflow te maximaliseren. Dit zit vooral in de delays tussen scans en detectie. Het systeem detecteert dus of er een persoon voor de koelkast staat. Het scherm gaat nu terug uit na 10 seconden als er geen interactie is met het scherm. Dit wordt gemeten met behulp van een library voor muis-/touchinteracties, namelijk pyautogui.
 
 Naast de library om de interactie te meten, wordt er ook gebruikgemaakt van de gpiozero-library. Deze dient voor het definiëren van de sensoren en actuatoren. Ook de time- en subprocess-libraries worden aangeroepen. Deze dienen respectievelijk voor de tijdsdelays en het uitvoeren van systeemcommando’s. Dat laatste is nodig om het scherm aan en uit te zetten. Hieronder bevindt zich de schakeling die wordt aangestuurd via deze [Python code](/wake_up/wake_up.py).
 
