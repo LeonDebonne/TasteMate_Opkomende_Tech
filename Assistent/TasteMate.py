@@ -1,12 +1,12 @@
-import speech_recognition as sr
-from google import genai
-import edge_tts
-import asyncio
-import pygame
-import io
-import json
-import os
-from key import GEMINI_API_KEY
+import speech_recognition as sr  # library voor spraakherkenning
+from google import genai  # library voor Gemini AI
+import edge_tts  # library voor tekst-naar-spraak
+import asyncio  # library voor asynchrone functies
+import pygame  # library voor audio afspelen
+import io  # library voor geheugenbestanden
+import json  # library voor JSON bestanden lezen
+import os  # library voor bestandspaden
+from key import GEMINI_API_KEY  # API sleutel importeren
 
 # Verbinding maken met Gemini AI
 client = genai.Client(api_key=GEMINI_API_KEY)
@@ -27,18 +27,18 @@ def inventory_naar_tekst(inventory):
     regels = []
     categories = {}
     for c in inventory.get("categories", []):
-        categories[c["id"]] = c["name"]
+        categories[c["id"]] = c["name"]  # categorie-id koppelen aan naam
 
     for product in inventory.get("products", []):
-        categorie = categories.get(product.get("categoryId", ""), "Onbekend")
-        naam = product.get("name", "Onbekend")
-        houdbaar = product.get("expiryDate", "onbekend")
-        regels.append(f"- {naam} (categorie: {categorie}, houdbaar tot: {houdbaar})")
+        categorie = categories.get(product.get("categoryId", ""), "Onbekend")  # categorie ophalen
+        naam = product.get("name", "Onbekend")  # productnaam ophalen
+        houdbaar = product.get("expiryDate", "onbekend")  # houdbaarheidsdatum ophalen
+        regels.append(f"- {naam} (categorie: {categorie}, houdbaar tot: {houdbaar})")  # regel toevoegen
 
     if not regels:
-        return "De koelkast is momenteel leeg."
+        return "De koelkast is momenteel leeg."  # lege koelkast melding
 
-    return "\n".join(regels)
+    return "\n".join(regels)  # alle regels samenvoegen
 
 
 # Lege lijst om de gespreksgeschiedenis in bij te houden
@@ -47,70 +47,53 @@ geschiedenis = []
 
 # Functie om tekst uit te spreken via Microsoft edge-tts
 async def speak(text):
-    # Verzoek sturen naar Microsoft met de tekst en Nederlandse stem
-    communicate = edge_tts.Communicate(text, voice="nl-NL-ColetteNeural")
+    communicate = edge_tts.Communicate(text, voice="nl-NL-ColetteNeural")  # Nederlandse stem instellen
 
-    # Lege variabele om audio in op te slaan
-    audio_data = b""
+    audio_data = b""  # lege variabele om audio in op te slaan
 
-    # Audio stukje per stukje ontvangen en samenvoegen
     async for chunk in communicate.stream():
         if chunk["type"] == "audio":
-            audio_data += chunk["data"]
+            audio_data += chunk["data"]  # audiofragmenten samenvoegen
 
-    # Audio in geheugen laden en afspelen
-    pygame.mixer.music.load(io.BytesIO(audio_data))
-    pygame.mixer.music.play()
+    pygame.mixer.music.load(io.BytesIO(audio_data))  # audio in geheugen laden
+    pygame.mixer.music.play()  # audio afspelen
 
-    # Wachten tot audio klaar is
     while pygame.mixer.music.get_busy():
-        pygame.time.Clock().tick(10)
+        pygame.time.Clock().tick(10)  # wachten tot audio klaar is
 
 
 # Hoofdfunctie van het programma
 async def main():
-    # Microfoon openen
-    with sr.Microphone() as mic:
-        # Eenmalig luisteren naar omgevingsgeluid om stilte te herkennen
-        r.adjust_for_ambient_noise(mic, duration=1)
+    with sr.Microphone() as mic:  # microfoon openen
+        r.adjust_for_ambient_noise(mic, duration=1)  # omgevingsgeluid kalibreren
         print("Klaar! Stel je vraag.")
 
         try:
-            # Blijf herhalen totdat er gestopt wordt
             while True:
                 try:
-                    # Luisteren naar microfoon, stopt na 60 seconden stilte
-                    audio = r.listen(mic, timeout=60)
-
-                    # Audio naar Google sturen en tekst terugkrijgen in het Nederlands
-                    spoken = r.recognize_google(audio, language="nl-NL")
+                    audio = r.listen(mic, timeout=60)  # luisteren, stopt na 60 seconden stilte
+                    spoken = r.recognize_google(audio, language="nl-NL")  # spraak naar tekst via Google
                     print(f"Jij: {spoken}")
 
                 except sr.WaitTimeoutError:
-                    # 60 seconden geen spraak -> afsluiten
-                    print("Geen spraak gedetecteerd, assistent sluit af.")
+                    print("Geen spraak gedetecteerd, assistent sluit af.")  # 60 seconden geen spraak -> afsluiten
                     break
                 except sr.UnknownValueError:
-                    # Spraak niet verstaan -> opnieuw proberen
-                    print("Niet verstaan, probeer opnieuw.")
+                    print("Niet verstaan, probeer opnieuw.")  # spraak niet verstaan -> opnieuw proberen
                     continue
                 except sr.RequestError:
-                    # Geen internetverbinding -> opnieuw proberen
-                    print("Geen verbinding.")
+                    print("Geen verbinding.")  # geen internet -> opnieuw proberen
                     continue
 
-                # Vraag toevoegen aan geschiedenis
-                geschiedenis.append({"role": "user", "content": spoken})
+                geschiedenis.append({"role": "user", "content": spoken})  # vraag toevoegen aan geschiedenis
 
-                # Maximaal 4 berichten onthouden, oudste verwijderen
                 if len(geschiedenis) > 4:
-                    geschiedenis.pop(0)
+                    geschiedenis.pop(0)  # oudste bericht verwijderen, maximaal 4 onthouden
 
-                # Inventory opnieuw inlezen zodat wijzigingen via de interface zichtbaar zijn
                 with open(inventory_path, "r", encoding="utf-8") as f:
-                    inventory = json.load(f)
+                    inventory = json.load(f)  # inventory opnieuw inlezen voor actuele gegevens
 
-                # Context opnieuw opbouwen met actuele inventory
+                # context opbouwen met actuele inventory en instructies voor Gemini
                 actuele_context = f"""
 Je bent een koelkastassistent. Je helpt de gebruiker met het bijhouden van voedsel in de koelkast.
 De categorieën zijn verschillende onderverdelingen in de koelkast. Bv. Sauzen
@@ -125,45 +108,37 @@ Gebruik alleen gegevens uit de bovenstaande lijst.
 Gebruik correcte leestekens in je antwoorden, zoals komma's bij opsommingen en punten aan het einde van zinnen.
 """
 
-                # Volledig gesprek opbouwen om naar Gemini te sturen
                 berichten = actuele_context + "\n\n"
                 for bericht in geschiedenis:
                     if bericht["role"] == "user":
-                        berichten += f"Gebruiker: {bericht['content']}\n"
+                        berichten += f"Gebruiker: {bericht['content']}\n"  # gebruikersbericht toevoegen
                     else:
-                        berichten += f"Assistent: {bericht['content']}\n"
+                        berichten += f"Assistent: {bericht['content']}\n"  # assistentbericht toevoegen
 
-                # Gesprek naar Gemini sturen en antwoord ontvangen
                 try:
                     resp = client.models.generate_content(
-                        model="gemini-2.5-flash", contents=berichten
+                        model="gemini-2.5-flash", contents=berichten  # gesprek naar Gemini sturen
                     )
-                    # Antwoord ophalen en "Assistent:" verwijderen als Gemini dat toevoegt
                     reply = resp.text.strip()
-                    reply = reply.removeprefix("Assistent:").strip()
+                    reply = reply.removeprefix("Assistent:").strip()  # "Assistent:" verwijderen indien aanwezig
                 except Exception as e:
                     print(f"Gemini fout: {e}")
-                    await speak("Gemini is momenteel overbelast, probeer het opnieuw.")
+                    await speak("Gemini is momenteel overbelast, probeer het opnieuw.")  # foutmelding uitspreken
                     continue
 
                 print(f"Assistent: {reply}")
-
-                # Antwoord toevoegen aan geschiedenis
-                geschiedenis.append({"role": "assistant", "content": reply})
-
-                # Antwoord uitspreken
-                await speak(reply)
+                geschiedenis.append({"role": "assistant", "content": reply})  # antwoord toevoegen aan geschiedenis
+                await speak(reply)  # antwoord uitspreken
                 print("Stel je volgende vraag.")
 
         except KeyboardInterrupt:
-            # Ctrl+C opvangen en netjes afsluiten
-            print("\nAssistent afgesloten via Ctrl+C. Tot ziens!")
-            pygame.mixer.music.stop()
-            pygame.mixer.quit()
+            print("\nAssistent afgesloten via Ctrl+C. Tot ziens!")  # afsluitbericht tonen
+            pygame.mixer.music.stop()  # audio stoppen
+            pygame.mixer.quit()  # audiospeler afsluiten
 
 
 # Programma starten
 try:
     asyncio.run(main())
 except KeyboardInterrupt:
-    pass  # Stilletjes afsluiten, bericht is al geprint in main()
+    pass  # stilletjes afsluiten, bericht is al geprint in main()
