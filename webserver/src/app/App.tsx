@@ -735,7 +735,7 @@ const handleCreateCategory = async (name: string, iconName: string, color: strin
     if (!zoneData) return null;
 
     const zoneName = zoneNames[zoneKey] || zoneKey;
-    const gridCols = zoneType === 'deur' ? 'grid-cols-1' : 'grid-cols-2';
+    const gridCols = zoneType === 'deur' ? 'grid-cols-1' : 'grid-cols-3';
 
     return (
       <div 
