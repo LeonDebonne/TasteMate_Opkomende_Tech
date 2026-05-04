@@ -93,7 +93,7 @@ De assistent heeft toegang tot de volledige inhoud van de koelkast. Die inhoud w
 Naast de inhoud van de koelkast onthoudt de assistent ook de laatste paar vragen en antwoorden uit het gesprek. Zo kan hij de context van een gesprek begrijpen en logisch verder praten, zonder dat de gebruiker alles telkens opnieuw moet uitleggen.
 
 ### Wat kan je vragen?
-De assistent is bedoeld voor praktische vragen over de koelkast. Je kan bijvoorbeeld vragen welke producten er in de koelkast zitten, wanneer iets over datum gaat, of wat er in een bepaalde zone staat. De assistent geeft altijd een kort en natuurlijk antwoord, alsof je met een persoon praat.
+De assistent is bedoeld voor praktische vragen over de koelkast. Je kan bijvoorbeeld vragen welke producten er in de koelkast zitten, wanneer iets over datum gaat, of wat er in een bepaalde zone staat. De assistent geeft altijd een kort en natuurlijk antwoord, alsof je met een persoon praat. Dit is een [demo](https://drive.google.com/file/d/14yIs6-6K8cf76QumfmExPYO-qfYbNQzW/view?usp=sharing) hiervan.
 
 ### Technische opbouw
 De assistent is geschreven in Python en maakt gebruik van een aantal externe libraries, dit zijn kant-en-klare stukken code die een specifieke taak uitvoeren zodat die niet zelf geschreven moet worden.
