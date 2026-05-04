@@ -7,30 +7,30 @@ Het eerste onderdeel wordt geactiveerd via een wake-upmechanisme. Dit maakt gebr
 Het tweede onderdeel werkt via een microfoon die luistert naar de vraag van de blinde of slechtziende persoon. Via een AI-assistent, die gekoppeld is aan Gemini, wordt deze vraag beantwoord met informatie uit de interface. Dit antwoord wordt vervolgens via een luidspreker gecommuniceerd naar de gebruiker.
 
 ## Validatie inputs
-Hiervoor werd de [datasheet](/datasheets/Raspberry%20PI.pdf) van de Raspberry Pi geraadpleegd
+Hiervoor werd de [datasheet](/docs/Raspberry%20PI.pdf) van de Raspberry Pi geraadpleegd
 ### Afstandssensor
 De afstandssensor wordt in het project gebruikt om te detecteren ofdat er een persoon voor de koelkast staat. Deze meet de afstand tot een bepaald object.
-Voor het valideren van de aansluiting is gebruik gemaakt van de [datasheet](/datasheets/HCSR04.pdf). De opstelling bevat een Raspberry Pi, de sensor en vier jumpers.
+Voor het valideren van de aansluiting is gebruik gemaakt van de [datasheet](/docs/HCSR04.pdf). De opstelling bevat een Raspberry Pi, de sensor en vier jumpers.
 
 <p align="center"> 
 <img src="/img/Schema_Afstandssensor.png" width="50%">
 
-De [code](/inputs/afstandssensor.py) maakt gebruik van de gpiozero library en de time library.
+De [code](/code/inputs/afstandssensor.py) maakt gebruik van de gpiozero library en de time library.
 
 ## Validatie outputs
-Hiervoor werd de [datasheet](/datasheets/Raspberry%20PI.pdf) van de Raspberry Pi geraadpleegd
+Hiervoor werd de [datasheet](/docs/Raspberry%20PI.pdf) van de Raspberry Pi geraadpleegd
 ### Buzzer
-De buzzer maakt een kort geluid om gebruikers te vertellen dat het scherm aan staat. Voor het valideren van de aansluiting is gebruik gemaakt van de [datasheet](/datasheets/Buzzer.pdf). De opstelling bevat een Raspberry Pi, de buzzer en twee jumpers.
+De buzzer maakt een kort geluid om gebruikers te vertellen dat het scherm aan staat. Voor het valideren van de aansluiting is gebruik gemaakt van de [datasheet](/docs/Buzzer.pdf). De opstelling bevat een Raspberry Pi, de buzzer en twee jumpers.
 
 <p align="center"> 
 <img src="/img/Schema_Buzzer.png" width="50%">
 
-De [code](/outputs/buzzer.py) maakt gebruik van de gpiozero library en de time library.
+De [code](/code/outputs/buzzer.py) maakt gebruik van de gpiozero library en de time library.
 
 ### Scherm
 Het scherm toont de interface en kan gebruikt worden via touchscreen. Er wordt gebruik gemaakt van een 4.3 inch HDMI LCD. 
 De opstelling bevat een Raspberry Pi, het scherm en een HDMI-kabel. De connectie gebeurt dus via de HDMI-kabel.
-De [code](/outputs/scherm.py) maakt gebruik van de tkinter library
+De [code](/code/outputs/scherm.py) maakt gebruik van de tkinter library
 
 ## Wake-up mechanisme
 
@@ -45,7 +45,7 @@ Voor dit onderdeel is het de bedoeling om met Arduino een systeem te maken dat d
 Als de persoon voor het scherm gedetecteerd blijft, blijft het scherm ingeschakeld. Wanneer de persoon echter meer dan 10 seconden weg is, schakelt het scherm automatisch weer uit.
 Er is gebruikgemaakt van enkele Arduino-componenten, zoals de Arduino Uno, een afstandssensor, een lcd-scherm en een buzzer.
 Het resultaat is quick en dirty gerealiseerd om zo weinig tijd te verliezen aan het opfleuren van iets dat louter testen van een concept is.
-Hier onder is het Wokwi schema te vinden van het arduino project. De code is te vinden onder [Arduino_Code](/wake_up/Arduino_Code).
+Hier onder is het Wokwi schema te vinden van het arduino project. De code is te vinden onder [Arduino_Code](code/wake_up/Arduino_Code).
 
 <p align="center"> 
 <img src="/img/Schema_Wakeup.jpg" width="50%">
@@ -56,7 +56,7 @@ Deze test is uitgevoerd om de logica te testen bij een gebruiksvriendelijker eco
 
 Dit onderdeel volgt dezelfde logica als de test met de Arduino. Er zijn hier en daar enkele tweaks uitgevoerd om de workflow te maximaliseren. Dit zit vooral in de delays tussen scans en detectie. Het systeem detecteert dus of er een persoon voor de koelkast staat. Het scherm gaat nu terug uit na 10 seconden als er geen interactie is met het scherm. Dit wordt gemeten met behulp van een library voor muis-/touchinteracties, namelijk pyautogui.
 
-Naast de library om de interactie te meten, wordt er ook gebruikgemaakt van de gpiozero-library. Deze dient voor het definiëren van de sensoren en actuatoren. Ook de time- en subprocess-libraries worden aangeroepen. Deze dienen respectievelijk voor de tijdsdelays en het uitvoeren van systeemcommando’s. Dat laatste is nodig om het scherm aan en uit te zetten. Hieronder bevindt zich de schakeling die wordt aangestuurd via deze [Python code](/wake_up/wake_up.py).
+Naast de library om de interactie te meten, wordt er ook gebruikgemaakt van de gpiozero-library. Deze dient voor het definiëren van de sensoren en actuatoren. Ook de time- en subprocess-libraries worden aangeroepen. Deze dienen respectievelijk voor de tijdsdelays en het uitvoeren van systeemcommando’s. Dat laatste is nodig om het scherm aan en uit te zetten. Hieronder bevindt zich de schakeling die wordt aangestuurd via deze [Python code](/code/wake_up/wake_up.py).
 
 <p align="center"> 
 <img src="/img/Schema_Wakeup_Rpi.png" width="50%">
