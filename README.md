@@ -1,5 +1,5 @@
 # TasteMate Overkoepelde Opdracht
-### Introductie
+## Introductie
 De TasteMate is een product dat het gebruik van de koelkast voor visueel beperkte personen bevordert. Het bestaat hoofdzakelijk uit twee delen, namelijk een touchscreeninterface en een AI-assistent. Het eerste onderdeel wordt gebruikt door begeleiders en/of familieleden. Hierop wordt de inventaris van de koelkast bijgehouden. Deze kan vervolgens worden geraadpleegd door de AI-assistent, die nuttige informatie doorspeelt naar de visueel beperkte persoon via text-to-speech.
 
 <p align="center"> 
@@ -8,6 +8,13 @@ De TasteMate is een product dat het gebruik van de koelkast voor visueel beperkt
 Het eerste onderdeel wordt geactiveerd via een wake-upmechanisme. Dit maakt gebruik van een afstandssensor die, wanneer er een persoon voor de koelkast of TasteMate staat, een signaal stuurt naar het touchscreen om in te schakelen. De interface wordt hierbij lokaal gehost en is ontworpen met FigmaMake.
 
 Het tweede onderdeel werkt via een microfoon die luistert naar de vraag van de blinde of slechtziende persoon. Via een AI-assistent, die gekoppeld is aan Gemini, wordt deze vraag beantwoord met informatie uit de interface. Dit antwoord wordt vervolgens via een luidspreker gecommuniceerd naar de gebruiker.
+
+## Hoe code opstarten?
+De code is opgesplitst in twee delen een voor de interface samen met het wake-up systeem en het andere voor de voice-assistent.
+#### Interface en wake-up
+Om dit deel te runnen is alle code uit de map webserver nodig en het [python script](/code/wake_up/wake_up.py) uit de map wake_up. De code in de map webserver regelt de frontend interface en de backend python server die de inventaris bijhoudt. Om alles op te starten dient een [startscript](/code/start_tastemate.sh) uitgevoerd te worden. Hierdoor wordt bij het opstarten van de Raspberry Pi alles automatisch opgestart.
+#### Voice-assistent
+Voor de voice-assistent moet alleen de code uit [TasteMate.py](/code/assistent/TasteMate.py) worden uitgevoerd. Deze raadpleegt dan de andere stukken code in deze map.
 
 ## Validatie inputs
 Hiervoor werd de [datasheet](/docs/Raspberry%20PI.pdf) van de Raspberry Pi geraadpleegd
@@ -36,14 +43,12 @@ De opstelling bevat een Raspberry Pi, het scherm en een HDMI-kabel. De connectie
 De [code](/code/outputs/scherm.py) maakt gebruik van de tkinter library
 
 ## Wake-up mechanisme
-
 Het wake-up mechanisme maakt gebruik van de afstandssensor om te detecteren ofdat er een persoon in de buurt is. Dit vertelt dan aan dePRaspberry pi dat het scherm aan moet alsook dat de buzzer moet afgaan. Zo is er een visuele en auditieve cue om aan de gebruiker te communiceren dat het scherm aan staat. Is er geen interactie met het scherm of staat er niemand meer voor zal het scherm na 10 seconden terug uit gaan.
 De code volgt deze logica:
 <p align="center"> 
 <img src="/img/wakeup_flowchart.svg" width="100%">
 
 ### Arduino
-
 Voor dit onderdeel is het de bedoeling om met Arduino een systeem te maken dat detecteert wanneer er een persoon voor de koelkast staat. Vervolgens moet het scherm aangaan en krijgt de gebruiker een audiotrigger om te laten weten dat het scherm is ingeschakeld.
 Als de persoon voor het scherm gedetecteerd blijft, blijft het scherm ingeschakeld. Wanneer de persoon echter meer dan 10 seconden weg is, schakelt het scherm automatisch weer uit.
 Er is gebruikgemaakt van enkele Arduino-componenten, zoals de Arduino Uno, een afstandssensor, een lcd-scherm en een buzzer.
@@ -56,7 +61,6 @@ Hier onder is het Wokwi schema te vinden van het arduino project. De code is te 
 Deze test is uitgevoerd om de logica te testen bij een gebruiksvriendelijker ecosysteem dan dat van Raspberry Pi. Dit doordat we al een introductie gekregen hebben over Arduino en eerdere kennis verworven hebben. Het finale systeem maakt wel gebruik van de Raspberry Pi omdat dit de daadwerkelijke interface moet afspelen.
 
 ### Raspberry Pi
-
 Dit onderdeel volgt dezelfde logica als de test met de Arduino. Er zijn hier en daar enkele tweaks uitgevoerd om de workflow te maximaliseren. Dit zit vooral in de delays tussen scans en detectie. Het systeem detecteert dus of er een persoon voor de koelkast staat. Het scherm gaat nu terug uit na 10 seconden als er geen interactie is met het scherm. Dit wordt gemeten met behulp van een library voor muis-/touchinteracties, namelijk pyautogui.
 
 Naast de library om de interactie te meten, wordt er ook gebruikgemaakt van de gpiozero-library. Deze dient voor het definiëren van de sensoren en actuatoren. Ook de time- en subprocess-libraries worden aangeroepen. Deze dienen respectievelijk voor de tijdsdelays en het uitvoeren van systeemcommando’s. Dat laatste is nodig om het scherm aan en uit te zetten. Hieronder bevindt zich de schakeling die wordt aangestuurd via deze [Python code](/code/wake_up/wake_up.py).
@@ -72,7 +76,6 @@ De sensoren zijn verbonden met de GPIO-pinnen. Het externe scherm is verbonden v
 Deze [demo](https://drive.google.com/file/d/15hXSTagw5abH1k6NjG4eRMN9H7aIJM2_/view?usp=drive_link) toont de werking van de interface en het wake-up mechanisme.
 
 ## Interface
-
 Op het scherm dat aan gaat door het wake-up mechanisme wordt de interface getoond. Dit houdt de invenstaris van de koelkast bij. Daarin zitten gegevens zoals de houdbaarheidsdatum, het aantal en de locatie van producten. 
 
 De applicatie maakt gebruik van 2 lokaal gehoste servers op de Raspberry Pi. De interface is een lokale webserver die automatisch wordt weergegeven in kioskmodus op chromium. Dit is de browser op de Raspberry Pi. Dit is een eenvoudige HTTP server op poort 5173. De logica en communicatie met de AI-assistent gebeurt via een Python backend server. Deze houdt de inventarisgegevens bij, die worden opgeslagen in een JSON-bestand die kan worden geraadpleegd door de AI.
@@ -82,7 +85,6 @@ De interface zelf is ontworpen via FigmaMake. Alle code rondom het design en de 
 <img src="/img/Interface.png" width="100%">
 
 ## Voice-assistent
-
 De voice-assistent is het gedeelte van TasteMate dat speciaal ontworpen is voor visueel beperkte gebruikers. In plaats van een scherm te gebruiken, verloopt alle communicatie via spraak. De gebruiker stelt gewoon een vraag aan de koelkast, en krijgt een gesproken antwoord terug.
 
 ### Hoe werkt het?
