@@ -1,6 +1,22 @@
 {
-  "categories": [],
-  "products": [],
+  "categories": [
+    {
+      "id": "custom_1778249635550",
+      "name": "Sauzen",
+      "iconName": "Milk",
+      "color": "bg-red-500"
+    }
+  ],
+  "products": [
+    {
+      "id": "1778249662.118184",
+      "name": "Mayo",
+      "quantity": 1,
+      "categoryId": "custom_1778249635550",
+      "expiryDate": "2026-05-15",
+      "addedAt": "2026-05-08"
+    }
+  ],
   "fridgeZones": {
     "deur": [
       null,
@@ -14,7 +30,7 @@
       null
     ],
     "koelvakBoven": [
-      null,
+      "custom_1778249635550",
       null,
       null
     ],
