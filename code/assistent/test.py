@@ -6,11 +6,11 @@ import pygame
 import io
 import json
 import os
-from gpiozero import Button
+# from gpiozero import Button
 from key import GEMINI_API_KEY
 
 # Audio via ALSA gebruiken, nodig voor Raspberry Pi / MAX98357A
-os.environ["SDL_AUDIODRIVER"] = "alsa"
+# pyos.environ["SDL_AUDIODRIVER"] = "alsa"
 
 # Audiospeler initialiseren
 pygame.mixer.init(
@@ -28,8 +28,8 @@ r = sr.Recognizer()
 
 # Knop op GPIO17
 # Knop aangesloten tussen GPIO17 en GND
-BUTTON_PIN = 17
-button = Button(BUTTON_PIN, pull_up=True, bounce_time=0.1)
+# BUTTON_PIN = 17
+# button = Button(BUTTON_PIN, pull_up=True)
 
 # Luistertijd na knop
 LISTEN_TIME = 60
@@ -130,7 +130,7 @@ async def main():
 
                 # Wachten op knopdruk
                 print("Wachten op knop...")
-                button.wait_for_press()
+                input("Druk op ENTER om te spreken...")
 
                 print("Knop ingedrukt.")
                 print("Assistent luistert nu...")
