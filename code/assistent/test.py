@@ -32,7 +32,7 @@ r = sr.Recognizer()
 # button = Button(BUTTON_PIN, pull_up=True)
 
 # Luistertijd na knop
-LISTEN_TIME = 60
+LISTEN_TIME = 5
 
 # USB microfoon index
 # Run eerst de code en kijk welk nummer jouw USB PnP microfoon heeft
