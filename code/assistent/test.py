@@ -31,8 +31,8 @@ r = sr.Recognizer()
 BUTTON_PIN = 17
 button = Button(BUTTON_PIN, pull_up=True, bounce_time=0.1)
 
-# Buzzer op GPIO
-BUZZER_PIN = 25
+# Buzzer op GPIO27
+BUZZER_PIN = 27
 buzzer = Buzzer(BUZZER_PIN)
 
 # Luistertijd na knop
@@ -91,9 +91,9 @@ async def piep_twee_maal():
     """Laat de buzzer 2 maal piepen."""
     for _ in range(2):
         buzzer.on()
-        await asyncio.sleep(0.1)
+        await asyncio.sleep(1)
         buzzer.off()
-        await asyncio.sleep(0.1)
+        await asyncio.sleep(1)
 
 
 async def speak(text):
