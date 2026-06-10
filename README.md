@@ -15,7 +15,7 @@ Om dit deel te laten werken, is alle code uit de map webserver nodig, samen met 
 
 Om alles op te starten, moet het [startscript](/code/start_tastemate.sh) worden uitgevoerd. Hierdoor wordt bij het opstarten van de Raspberry Pi alles automatisch gestart.
 
-Er is ook een poging gedaan om alles op de Raspberry pi te draaien. De code voor de assistent is hiervoor getweaked. Deze maakt gebruik van een PnP mic en een GERUI DFplayer mini speaker. De code([TasteMate_Raspberry.py](/code/assistent/TasteMate_Rpi.py)) apart lukt om te runnen op de pi maar, als alle verschillende onderdelen samen moeten runnen is de Raspberry pi overbelast. Het volledige systeem is dus niet gerealiseerd maar alle componenten werken wel individueel.
+Er is ook een poging gedaan om alles op de Raspberry pi te draaien. De code voor de assistent is hiervoor getweaked. Deze maakt gebruik van een PnP mic en een GERUI DFplayer mini speaker. De code[TasteMate_Raspberry.py](/code/assistent/TasteMate_Rpi.py) apart lukt om te runnen op de pi maar, als alle verschillende onderdelen samen moeten runnen is de Raspberry pi overbelast. Het volledige systeem is dus niet gerealiseerd maar alle componenten werken wel individueel.
 
 #### Voice-assistent
 Voor de voice-assistent moet alleen de code uit [TasteMate.py](/code/assistent/TasteMate.py) worden uitgevoerd. Deze raadpleegt dan de andere stukken code in deze map.
